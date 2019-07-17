@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
   if (!title || !description) {
     return res
       .status(400)
-      .send({ error: "You must provide a title and description." });
+      .send({ error: "You must provide a Title and Description." });
   }
   if (title.length > 100) {
     return res.status(400).send({ error: "Title too long." });
