@@ -38,6 +38,12 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.virtual("posts", {
+  ref: "Post",
+  localField: "_id",
+  foreignField: "owner"
+});
+
 userSchema.pre("save", async function(next) {
   const user = this;
   if (user.isModified("password")) {
