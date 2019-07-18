@@ -1,44 +1,64 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("config");
 
+const auth = require("../middleware/auth");
 const User = require("../models/user");
 
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
-  const emailDup = await User.findOne({ email: req.body.email });
-  if (emailDup) {
-    return res.status(400).send({ error: "This email is already registered." });
-  }
-
+router.get("/", auth, async (req, res) => {
   try {
-    const user = new User(req.body);
-    await user.save();
-    res.status(201).send(user);
+    const users = await User.find({});
+    res.send(users);
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(500).send(err.message);
   }
 });
 
-router.post("/login", async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    return res.status(400).send({ error: "Email or Password Incorrect." });
-  }
-  const isMatch = await bcrypt.compare(req.body.password, user.password);
-  if (!isMatch) {
-    return res.status(400).send({ error: "Email or Password Incorrect." });
-  }
+router.get("/me", auth, async (req, res) => {
   try {
-    const token = jwt.sign({ _id: user._id }, config.get("jwtSecret"), {
-      expiresIn: "7 days"
-    });
-
-    res.send({ user, token });
+    res.send(req.user);
   } catch (err) {
     res.status(500).send(err.message);
+  }
+});
+
+router.get("/:id", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    // await user
+    //   .populate({
+    //     path: "posts",
+    //     options: { sort: { createdAt: -1 } }
+    //   })
+    //   .execPopulate();
+    res.send(user);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+router.delete("/me", auth, async (req, res) => {
+  try {
+    await req.user.remove();
+    res.send(`User ${req.user.firstName} was successfully deleted.`);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+router.patch("/me", auth, async (req, res) => {
+  const allowedUpdates = ["firstName", "lastName", "email", "password"];
+  const updates = Object.keys(req.body);
+  const isMatch = updates.every(update => allowedUpdates.includes(update));
+  if (!isMatch) {
+    return res.status(400).send({ error: "Update Invalid." });
+  }
+  try {
+    updates.forEach(update => (req.user[update] = req.body[update]));
+    await req.user.save();
+    res.send(req.user);
+  } catch (err) {
+    res.status(400).send(err.message);
   }
 });
 

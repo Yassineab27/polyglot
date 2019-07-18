@@ -7,6 +7,9 @@ const auth = async (req, res, next) => {
     const token = req.header("Authorization").replace("Bearer ", "");
     const verfiedToken = jwt.verify(token, config.get("jwtSecret"));
     const user = await User.findById(verfiedToken._id);
+    if (!user) {
+      throw new Error();
+    }
 
     req.user = user;
     req.token = token;

@@ -37,6 +37,15 @@ router.get("/", auth, async (req, res) => {
       return res.status(404).send({ error: "no posts found." });
     }
     res.send(posts);
+    // const user = await req.user
+    //   .populate({
+    //     path: "posts",
+    //     options: {
+    //       sort: { createdAt: -1 }
+    //     }
+    //   })
+    //   .execPopulate();
+    // res.send(user.posts);
   } catch (err) {
     res.status(500).send(err.message);
   }

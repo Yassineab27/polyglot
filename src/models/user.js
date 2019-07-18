@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
+const Post = require("./post");
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -44,6 +46,11 @@ userSchema.virtual("posts", {
   foreignField: "owner"
 });
 
+userSchema.pre("remove", async function(next) {
+  await Post.deleteMany({ owner: this._id });
+  next();
+});
+
 userSchema.pre("save", async function(next) {
   const user = this;
   if (user.isModified("password")) {
@@ -51,6 +58,14 @@ userSchema.pre("save", async function(next) {
   }
   next();
 });
+
+userSchema.methods.toJSON = function() {
+  const userObject = this.toObject();
+
+  delete userObject.password;
+
+  return userObject;
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
