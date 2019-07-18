@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const gravatar = require("gravatar");
 
 const User = require("../models/user");
 
@@ -13,8 +14,17 @@ router.post("/register", async (req, res) => {
     return res.status(400).send({ error: "This email is already registered." });
   }
 
+  const avatar = gravatar.url(req.body.email, {
+    s: "200",
+    r: "pg",
+    d: "mm"
+  });
+
   try {
-    const user = new User(req.body);
+    const user = new User({
+      ...req.body,
+      avatar
+    });
     await user.save();
     res.status(201).send(user);
   } catch (err) {

@@ -14,6 +14,7 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// different Routes
 app.use("/posts", postRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
