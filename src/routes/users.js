@@ -5,14 +5,14 @@ const User = require("../models/user");
 
 const router = express.Router();
 
-router.get("/", auth, async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.send(users);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
+// router.get("/", auth, async (req, res) => {
+//   try {
+//     const users = await User.find({});
+//     res.send(users);
+//   } catch (err) {
+//     res.status(500).send(err.message);
+//   }
+// });
 
 router.get("/me", auth, async (req, res) => {
   try {
@@ -22,20 +22,20 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
-router.get("/:id", auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    // await user
-    //   .populate({
-    //     path: "posts",
-    //     options: { sort: { createdAt: -1 } }
-    //   })
-    //   .execPopulate();
-    res.send(user);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
+// router.get("/:id", auth, async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     // await user
+//     //   .populate({
+//     //     path: "posts",
+//     //     options: { sort: { createdAt: -1 } }
+//     //   })
+//     //   .execPopulate();
+//     res.send(user);
+//   } catch (err) {
+//     res.status(500).send(err.message);
+//   }
+// });
 
 router.delete("/me", auth, async (req, res) => {
   try {
