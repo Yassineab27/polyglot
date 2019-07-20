@@ -3,6 +3,7 @@ const express = require("express");
 const auth = require("../middleware/auth");
 const Profile = require("../models/profile");
 const User = require("../models/user");
+const Post = require("../models/post");
 
 const router = express.Router();
 
@@ -16,7 +17,10 @@ router.get("/me", auth, async (req, res) => {
     if (!profile) {
       return res.status(404).send({ error: "This profile does not exist." });
     }
-    res.send(profile);
+    const posts = await Post.find({ owner: req.user._id }).sort({
+      createdAt: -1
+    });
+    res.send({ profile, posts });
   } catch (err) {
     res.status(500).send(err.message);
   }
