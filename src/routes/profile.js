@@ -22,11 +22,28 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
+//  GET PROFILE BY USER ID
+router.get("/user/:id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id).populate("owner", [
+      "firstName",
+      "avatar"
+    ]);
+    if (!profile) {
+      return res.status(404).send({ error: "Profile not found." });
+    }
+    res.send(profile);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 // GET ALL PROFILES
 router.get("/", auth, async (req, res) => {
   try {
     const profiles = await Profile.find().populate("owner", [
       "firstName",
+      "lastName",
       "avatar"
     ]);
     res.send(profiles);

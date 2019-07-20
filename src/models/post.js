@@ -7,8 +7,8 @@ const postSchema = new Schema(
     title: {
       type: String,
       trim: true,
-      required: true
-      //   maxlength: 50
+      required: true,
+      maxlength: 100
     },
     description: {
       type: String,
@@ -19,7 +19,47 @@ const postSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User"
-    }
+    },
+    firstName: {
+      type: String,
+      required: true
+    },
+    lastName: {
+      type: String,
+      trquired: true
+    },
+    avatar: {
+      type: String
+    },
+    likes: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: "User"
+        }
+      }
+    ],
+    comments: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: "User"
+        },
+        text: {
+          type: String,
+          required: true
+        },
+        name: {
+          type: String
+        },
+        avatar: {
+          type: String
+        }
+      },
+      {
+        timestamps: true
+      }
+    ]
   },
   {
     timestamps: true

@@ -3,6 +3,7 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 const Post = require("./post");
+const Profile = require("./profile");
 
 const Schema = mongoose.Schema;
 
@@ -51,6 +52,7 @@ userSchema.virtual("posts", {
 
 userSchema.pre("remove", async function(next) {
   await Post.deleteMany({ owner: this._id });
+  await Profile.deleteMany({ owner: this._id });
   next();
 });
 
