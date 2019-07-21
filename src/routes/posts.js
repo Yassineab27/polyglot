@@ -8,22 +8,16 @@ const router = express.Router();
 
 // CREATE POST
 router.post("/", auth, async (req, res) => {
-  // const { title, description } = req.body;
-  // if (!title || !description) {
-  //   return res
-  //     .status(400)
-  //     .send({ error: "You must provide a Title and Description." });
-  // }
-  // if (title.length > 100) {
-  //   return res.status(400).send({ error: "Title too long." });
-  // }
+  const profile = await Profile.findOne({ owner: req.user._id });
+  if (!profile) {
+    return res
+      .status(400)
+      .send({ error: "You need to have a Profile to create a Post." });
+  }
   try {
     const newPost = new Post({
       ...req.body,
-      owner: req.user._id,
-      firstName: req.user.firstName,
-      lastName: req.user.lastName,
-      avatar: req.user.avatar
+      owner: req.user._id
     });
     await newPost.save();
     res.status(201).send(newPost);
@@ -32,12 +26,14 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-// GET POSTS
+// GET All POSTS
 router.get("/", auth, async (req, res) => {
   try {
-    const posts = await Post.find().sort({
-      createdAt: -1
-    });
+    const posts = await Post.find()
+      .populate("owner", ["firstName", "lastName", "avatar"])
+      .sort({
+        createdAt: -1
+      });
     if (!posts.length) {
       return res.status(404).send({ error: "no posts found." });
     }
@@ -50,7 +46,11 @@ router.get("/", auth, async (req, res) => {
 // GET SINGLE POST BY ID
 router.get("/:id", auth, async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate("owner", [
+      "firstName",
+      "lastName",
+      "avatar"
+    ]);
     if (!post) {
       return res.status(404).send({ error: "Post not found." });
     }
@@ -103,10 +103,6 @@ router.delete("/:id", auth, async (req, res) => {
       return res.status(404).send({ error: "Post not found." });
     }
     if (post.owner.toString() !== req.user._id.toString()) {
-      console.log({
-        userid: req.user._id.toString(),
-        postuserid: post.owner.toString()
-      });
       return res
         .status(400)
         .send({ error: "You can only delete your own posts." });

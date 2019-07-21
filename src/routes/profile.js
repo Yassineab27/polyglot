@@ -12,7 +12,7 @@ router.get("/me", auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ owner: req.user._id }).populate(
       "owner",
-      ["firstName", "avatar"]
+      ["firstName", "avatar", "lastName"]
     );
     if (!profile) {
       return res.status(404).send({ error: "This profile does not exist." });
@@ -29,14 +29,17 @@ router.get("/me", auth, async (req, res) => {
 //  GET PROFILE BY USER ID
 router.get("/user/:id", auth, async (req, res) => {
   try {
-    const profile = await Profile.findById(req.params.id).populate("owner", [
-      "firstName",
-      "avatar"
-    ]);
+    const profile = await Profile.findOne({ owner: req.params.id }).populate(
+      "owner",
+      ["firstName", "avatar", "lastName"]
+    );
     if (!profile) {
-      return res.status(404).send({ error: "Profile not found." });
+      return res.status(404).send({ error: "This profile does not exist." });
     }
-    res.send(profile);
+    const posts = await Post.find({ owner: req.params.id }).sort({
+      createdAt: -1
+    });
+    res.send({ profile, posts });
   } catch (err) {
     res.status(500).send(err.message);
   }

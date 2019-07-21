@@ -20,17 +20,6 @@ const postSchema = new Schema(
       required: true,
       ref: "User"
     },
-    firstName: {
-      type: String,
-      required: true
-    },
-    lastName: {
-      type: String,
-      trquired: true
-    },
-    avatar: {
-      type: String
-    },
     likes: [
       {
         user: {
