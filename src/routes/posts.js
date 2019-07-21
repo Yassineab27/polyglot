@@ -114,4 +114,48 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
+// LIKE POST
+router.patch("/like/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).send("Post not found.");
+    }
+
+    if (
+      post.likes.filter(
+        like => like.owner.toString() === req.user._id.toString()
+      ).length > 0
+    ) {
+      return res.status(400).send({ error: "You can like only once." });
+    }
+
+    post.likes.push({ owner: req.user._id });
+    await post.save();
+
+    res.send({ message: "Post Liked!", post });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// DISLIKE POST
+router.patch("/dislike/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(400).send({ error: "Post not found." });
+    }
+
+    const likes = post.likes.filter(
+      like => like.owner.toString() !== req.user._id.toString()
+    );
+    post.likes = likes;
+    await post.save();
+    res.send(post);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;
