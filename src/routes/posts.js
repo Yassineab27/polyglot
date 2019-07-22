@@ -158,4 +158,89 @@ router.patch("/dislike/:id", auth, async (req, res) => {
   }
 });
 
+// CREATE COMMENT
+router.post("/comment/:id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(400).send({ error: "Post not found." });
+    }
+    const comment = {
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      avatar: req.user.avatar,
+      text: req.body.text,
+      owner: req.user._id
+    };
+
+    post.comments.unshift(comment);
+    await post.save();
+    res.status(201).send(post);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// PATCH COMMENT
+router.patch("/comment/:id/:comment_id", auth, async (req, res) => {
+  const allowUpdate = ["text"];
+  const update = Object.keys(req.body);
+  const isMatch = update.every(u => allowUpdate.includes(u));
+  if (!isMatch) {
+    return res.status(400).send({ error: "Update invalid." });
+  }
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).send({ error: "Post not found." });
+    }
+    const comment = post.comments.find(
+      comment => comment._id.toString() === req.params.comment_id
+    );
+    if (!comment) {
+      return res.status(404).send({ error: "Comment not found." });
+    }
+    if (comment.owner.toString() !== req.user._id.toString()) {
+      return res
+        .status(400)
+        .send({ error: "You can only edit your own Comment." });
+    }
+    comment.text = req.body.text;
+    await post.save();
+    res.send(post);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+// DELETE COMMENT
+router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).send({ error: "Post not found." });
+    }
+    comment = post.comments.find(
+      comment => comment._id.toString() === req.params.comment_id
+    );
+    if (!comment) {
+      return res.status(404).send({ error: "Comment not found." });
+    }
+    if (comment.owner.toString() !== req.user._id.toString()) {
+      return res
+        .status(400)
+        .send({ error: "You can only delete your own commets" });
+    }
+    const comments = post.comments.filter(
+      comment => comment._id.toString() !== req.params.comment_id
+    );
+    post.comments = comments;
+    await post.save();
+
+    res.send(post);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;
