@@ -12,7 +12,7 @@ router.post("/", auth, async (req, res) => {
   if (!profile) {
     return res
       .status(400)
-      .send({ error: "You need to have a Profile to create a Post." });
+      .send({ error: "You need to create a profile first." });
   }
   try {
     const newPost = new Post({
@@ -116,6 +116,12 @@ router.delete("/:id", auth, async (req, res) => {
 
 // LIKE POST
 router.patch("/like/:id", auth, async (req, res) => {
+  const profile = await Profile.findOne({ owner: req.user._id });
+  if (!profile) {
+    return res
+      .status(400)
+      .send({ error: "You need to create a profile first." });
+  }
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
@@ -160,6 +166,12 @@ router.patch("/dislike/:id", auth, async (req, res) => {
 
 // CREATE COMMENT
 router.post("/comment/:id", auth, async (req, res) => {
+  const profile = await Profile.findOne({ owner: req.user._id });
+  if (!profile) {
+    return res
+      .status(400)
+      .send({ error: "You need to create a profile first." });
+  }
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
@@ -226,11 +238,13 @@ router.delete("/comment/:id/:comment_id", auth, async (req, res) => {
     if (!comment) {
       return res.status(404).send({ error: "Comment not found." });
     }
+
     if (comment.owner.toString() !== req.user._id.toString()) {
       return res
         .status(400)
         .send({ error: "You can only delete your own commets" });
     }
+    // Add else if so the owner of the post can delete too
     const comments = post.comments.filter(
       comment => comment._id.toString() !== req.params.comment_id
     );

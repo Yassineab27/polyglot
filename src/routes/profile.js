@@ -17,9 +17,11 @@ router.get("/me", auth, async (req, res) => {
     if (!profile) {
       return res.status(404).send({ error: "This profile does not exist." });
     }
-    const posts = await Post.find({ owner: req.user._id }).sort({
-      createdAt: -1
-    });
+    const posts = await Post.find({ owner: req.user._id })
+      .populate("owner", ["firstName", "lastName", "avatar"])
+      .sort({
+        createdAt: -1
+      });
     res.send({ profile, posts });
   } catch (err) {
     res.status(500).send(err.message);
@@ -36,9 +38,11 @@ router.get("/user/:id", auth, async (req, res) => {
     if (!profile) {
       return res.status(404).send({ error: "This profile does not exist." });
     }
-    const posts = await Post.find({ owner: req.params.id }).sort({
-      createdAt: -1
-    });
+    const posts = await Post.find({ owner: req.params.id })
+      .populate("owner", ["firstName", "lastName", "avatar"])
+      .sort({
+        createdAt: -1
+      });
     res.send({ profile, posts });
   } catch (err) {
     res.status(500).send(err.message);
