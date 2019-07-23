@@ -1,11 +1,16 @@
 import React from "react";
+
+import Home from "./layout/Home";
+import Navbar from "./layout/Navbar";
+
 import "../index.css";
 
 const App = () => {
   return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
+    <React.Fragment>
+      <Home />
+      <Navbar />
+    </React.Fragment>
   );
 };
 
