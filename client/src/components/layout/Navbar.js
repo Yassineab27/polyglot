@@ -1,22 +1,22 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav className="navbar bg-main">
       <h1>
-        <a href="index.html">
-          <i className="fas fa-puzzle-piece" /> Polyglot
-        </a>
+        <i className="fas fa-puzzle-piece" /> Polyglot
       </h1>
       <ul>
         <li>
-          <a href="profiles.html">Developers</a>
+          <NavLink to="/auth/register" activeClassName="navbar-active">
+            Sign up
+          </NavLink>
         </li>
         <li>
-          <a href="register.html">Register</a>
-        </li>
-        <li>
-          <a href="login.html">Login</a>
+          <NavLink to="/auth/login" activeClassName="navbar-active">
+            Login <i className="fas fa-sign-in-alt" />
+          </NavLink>
         </li>
       </ul>
     </nav>

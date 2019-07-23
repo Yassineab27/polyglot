@@ -1,21 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <section className="home">
       <div className="home-inner">
-        <h1 className="x-large">Polyglot</h1>
+        <h1 className="x-large">
+          Polyglot <i className="fas fa-comment-dots" />
+        </h1>
         <p className="text">
           Connect with native speakers from the whole world{" "}
           <i className="fas fa-globe-americas" />
         </p>
         <div className="buttons">
-          <a href="register.html" className="btn btn-main">
-            Sign Up
-          </a>
-          <a href="login.html" className="btn btn-light">
+          <Link to="/auth/register" className="btn btn-main">
+            Sign up
+          </Link>
+          <Link to="/auth/login" className="btn btn-light">
             Login
-          </a>
+          </Link>
         </div>
       </div>
     </section>
