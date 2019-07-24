@@ -5,6 +5,7 @@ const config = require("config");
 const gravatar = require("gravatar");
 
 const User = require("../models/user");
+const Profile = require("../models/profile");
 
 const router = express.Router();
 
@@ -45,7 +46,8 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ _id: user._id }, config.get("jwtSecret"), {
       expiresIn: "7 days"
     });
-    res.send({ user, token });
+    const profile = await Profile.findOne({ owner: user._id });
+    res.send({ user, token, profile });
   } catch (err) {
     res.status(500).send(err.message);
   }

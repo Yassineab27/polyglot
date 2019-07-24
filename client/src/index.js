@@ -6,11 +6,22 @@ import thunk from "redux-thunk";
 
 import "./index.css";
 import App from "./components/App";
+import { setUser, setProfile } from "./actions";
 
 import reducers from "./reducers";
+import setAuthorizationToken from "./utils/setAuthorizationToken";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+
+if (localStorage.token && localStorage.user) {
+  setAuthorizationToken(localStorage.getItem("token"));
+  store.dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+}
+
+if (localStorage.profile) {
+  store.dispatch(setProfile(JSON.parse(localStorage.getItem("profile"))));
+}
 
 ReactDOM.render(
   <Provider store={store}>

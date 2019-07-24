@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../index.css";
 
-const Login = () => {
+import { authLogin } from "../../actions";
+import { connect } from "react-redux";
+
+const Login = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,6 +16,7 @@ const Login = () => {
       password
     };
     console.log(user);
+    props.authLogin(user);
   };
   return (
     <React.Fragment>
@@ -52,4 +56,7 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(
+  null,
+  { authLogin }
+)(Login);

@@ -18,6 +18,15 @@ const Navbar = () => {
             Login <i className="fas fa-sign-in-alt" />
           </NavLink>
         </li>
+        <li>|</li>
+        <li>
+          <NavLink to="/posts" activeClassName="navbar-active">
+            Posts
+          </NavLink>
+        </li>
+        <li>
+          <i className="fas fa-door-open" />
+        </li>
       </ul>
     </nav>
   );
