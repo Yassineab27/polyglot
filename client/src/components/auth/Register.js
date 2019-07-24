@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../index.css";
 
-const Register = () => {
+import { connect } from "react-redux";
+import { authRegister, setAlert } from "../../actions";
+
+const Register = props => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,9 +15,12 @@ const Register = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (password.length < 6) {
-      console.log("Password too short.");
+      props.setAlert({ msg: "Password too short. Try again.", type: "danger" });
     } else if (password !== password2) {
-      console.log("Make sure too passwords match.");
+      props.setAlert({
+        msg: "Please make sure both passwords match.",
+        type: "danger"
+      });
     } else {
       const user = {
         firstName,
@@ -23,6 +29,7 @@ const Register = () => {
         password
       };
       console.log(user);
+      props.authRegister(user);
     }
   };
 
@@ -100,4 +107,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default connect(
+  null,
+  { authRegister, setAlert }
+)(Register);
