@@ -2,6 +2,7 @@ import axios from "axios";
 import history from "../components/history";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 
+// AUTH ACTIONS
 export const authRegister = user => {
   return async dispatch => {
     try {
@@ -66,4 +67,16 @@ export const logOut = () => {
   localStorage.clear();
   history.push("/auth/login");
   return { type: "LOG_OUT" };
+};
+
+// PROFILE
+export const getMyProfile = () => {
+  return async dispatch => {
+    try {
+      const response = await axios.get("/profiles/me");
+      dispatch({ type: "GET_MY_PROFILE", payload: response.data });
+    } catch (err) {
+      dispatch({ type: "SET_ALERT", payload: err.response.data.error });
+    }
+  };
 };

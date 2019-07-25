@@ -22,14 +22,16 @@ const App = () => {
         <Alert />
         <Switch>
           <Route exact path="/" component={Home} />
-          <div className="container">
-            <Route path="/auth/register" component={Register} />
-            <Route path="/auth/Login" component={Login} />
-            <Route path="/users/me" component={User} />
-            <Route path="/profiles/me" component={Profile} />
-            <Route path="/profiles/new" component={CreateProfile} />
-            <Route path="/posts" component={Posts} />
-          </div>
+          <React.Fragment>
+            <div className="container">
+              <Route path="/auth/register" component={Register} />
+              <Route path="/auth/Login" component={Login} />
+              <Route path="/users/me" component={User} />
+              <Route path="/profiles/me" component={Profile} />
+              <Route path="/profiles/new" component={CreateProfile} />
+              <Route path="/posts" component={Posts} />
+            </div>
+          </React.Fragment>
         </Switch>
       </Router>
     </React.Fragment>
