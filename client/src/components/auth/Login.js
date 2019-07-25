@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../../index.css";
 
-import { authLogin } from "../../actions";
+import { authLogin, setAlert } from "../../actions";
 import { connect } from "react-redux";
 
 const Login = props => {
@@ -18,6 +18,11 @@ const Login = props => {
     console.log(user);
     props.authLogin(user);
   };
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/posts" />;
+  }
+
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit} className="form">
@@ -56,7 +61,11 @@ const Login = props => {
   );
 };
 
+const mapStateToProps = state => {
+  return { isAuthenticated: state.auth.isAuthenticated };
+};
+
 export default connect(
-  null,
-  { authLogin }
+  mapStateToProps,
+  { authLogin, setAlert }
 )(Login);

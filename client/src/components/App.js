@@ -18,13 +18,15 @@ const App = () => {
       <Router history={history}>
         <Navbar />
         <Alert />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/auth/register" component={Register} />
-          <Route path="/auth/Login" component={Login} />
-          <Route path="/profiles/new" component={Profile} />
-          <Route path="/posts" component={Posts} />
-        </Switch>
+        <section className="container">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/auth/register" component={Register} />
+            <Route path="/auth/Login" component={Login} />
+            <Route path="/profiles/new" component={Profile} />
+            <Route path="/posts" component={Posts} />
+          </Switch>
+        </section>
       </Router>
     </React.Fragment>
   );

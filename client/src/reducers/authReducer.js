@@ -7,16 +7,16 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "LOG_OUT":
+      return { user: null, profile: null, isAuthenticated: false, alert: null };
     case "SET_PROFILE":
       return { ...state, profile: action.payload };
     case "SET_USER":
       return { ...state, user: action.payload, isAuthenticated: true };
     case "AUTH_LOGIN":
       return {
-        ...state,
         user: action.payload.user,
         profile: action.payload.profile,
-        token: action.payload.token,
         isAuthenticated: true,
         alert: {
           msg: `Hello, ${action.payload.user.firstName} ${

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../../index.css";
 
 import { connect } from "react-redux";
@@ -32,6 +32,10 @@ const Register = props => {
       props.authRegister(user);
     }
   };
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/posts" />;
+  }
 
   return (
     <React.Fragment>
@@ -107,7 +111,11 @@ const Register = props => {
   );
 };
 
+const mapStateToProps = state => {
+  return { isAuthenticated: state.auth.isAuthenticated };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { authRegister, setAlert }
 )(Register);

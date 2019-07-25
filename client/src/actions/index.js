@@ -61,3 +61,9 @@ export const setUser = user => {
 export const setProfile = profile => {
   return { type: "SET_PROFILE", payload: profile };
 };
+
+export const logOut = () => {
+  localStorage.clear();
+  history.push("/auth/login");
+  return { type: "LOG_OUT" };
+};
