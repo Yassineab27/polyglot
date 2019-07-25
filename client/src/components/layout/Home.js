@@ -1,7 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
-const Home = () => {
+import { connect } from "react-redux";
+
+const Home = props => {
+  if (props.isAuthenticated) {
+    return <Redirect to="/posts" />;
+  }
+
   return (
     <section className="home">
       <div className="home-inner">
@@ -25,4 +31,8 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = state => {
+  return { isAuthenticated: state.auth.isAuthenticated };
+};
+
+export default connect(mapStateToProps)(Home);

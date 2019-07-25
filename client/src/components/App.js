@@ -7,8 +7,10 @@ import Navbar from "./layout/Navbar";
 import Alert from "./layout/Alert";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
-import Profile from "./pages/Profile";
-import Posts from "./pages/Posts";
+import User from "./user/User";
+import CreateProfile from "./profile/CreateProfile";
+import Profile from "./profile/Profile";
+import Posts from "./posts/Posts";
 
 import "../index.css";
 
@@ -18,15 +20,17 @@ const App = () => {
       <Router history={history}>
         <Navbar />
         <Alert />
-        <section className="container">
-          <Switch>
-            <Route exact path="/" component={Home} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <div className="container">
             <Route path="/auth/register" component={Register} />
             <Route path="/auth/Login" component={Login} />
-            <Route path="/profiles/new" component={Profile} />
+            <Route path="/users/me" component={User} />
+            <Route path="/profiles/me" component={Profile} />
+            <Route path="/profiles/new" component={CreateProfile} />
             <Route path="/posts" component={Posts} />
-          </Switch>
-        </section>
+          </div>
+        </Switch>
       </Router>
     </React.Fragment>
   );
