@@ -19,8 +19,8 @@ if (localStorage.token && localStorage.user) {
   store.dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
 }
 
-if (localStorage.profile) {
-  store.dispatch(setProfile(JSON.parse(localStorage.getItem("profile"))));
+if (localStorage.hasProfile) {
+  store.dispatch(setProfile());
 }
 
 ReactDOM.render(

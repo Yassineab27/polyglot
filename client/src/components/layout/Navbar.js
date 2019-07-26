@@ -13,7 +13,7 @@ const Navbar = props => {
     });
   };
 
-  const profile = props.profile ? (
+  const profile = props.hasProfile ? (
     <NavLink to="/profiles/me" activeClassName="navbar-active">
       <i className="fas fa-user-circle fa-lg" />
     </NavLink>
@@ -38,7 +38,7 @@ const Navbar = props => {
           <li>{profile}</li>
           <li>
             <NavLink to="/users/me" activeClassName="navbar-active">
-              <i className="fas fa-cogs fa-lg" />
+              <i className="fas fa-users-cog fa-lg" />
             </NavLink>
           </li>
           <li
@@ -76,7 +76,7 @@ const Navbar = props => {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    profile: state.auth.profile
+    hasProfile: state.auth.hasProfile
   };
 };
 

@@ -1,6 +1,6 @@
 const initialState = {
   user: null,
-  profile: null,
+  hasProfile: null,
   isAuthenticated: false,
   alert: null
 };
@@ -10,13 +10,13 @@ const authReducer = (state = initialState, action) => {
     case "LOG_OUT":
       return { user: null, profile: null, isAuthenticated: false, alert: null };
     case "SET_PROFILE":
-      return { ...state, profile: action.payload };
+      return { ...state, hasProfile: true };
     case "SET_USER":
       return { ...state, user: action.payload, isAuthenticated: true };
     case "AUTH_LOGIN":
       return {
         user: action.payload.user,
-        profile: action.payload.profile,
+        hasProfile: action.payload.profile,
         isAuthenticated: true,
         alert: {
           msg: `Hello, ${action.payload.user.firstName} ${

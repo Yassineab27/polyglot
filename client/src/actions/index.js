@@ -41,7 +41,7 @@ export const authLogin = user => {
       setAuthorizationToken(response.data.token);
 
       if (response.data.profile) {
-        localStorage.setItem("profile", JSON.stringify(response.data.profile));
+        localStorage.setItem("hasProfile", JSON.stringify(true));
         history.push("/posts");
       } else {
         history.push("/profiles/new");
@@ -59,8 +59,8 @@ export const setUser = user => {
   return { type: "SET_USER", payload: user };
 };
 
-export const setProfile = profile => {
-  return { type: "SET_PROFILE", payload: profile };
+export const setProfile = () => {
+  return { type: "SET_PROFILE" };
 };
 
 export const logOut = () => {
@@ -76,7 +76,11 @@ export const getMyProfile = () => {
       const response = await axios.get("/profiles/me");
       dispatch({ type: "GET_MY_PROFILE", payload: response.data });
     } catch (err) {
-      dispatch({ type: "SET_ALERT", payload: err.response.data.error });
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+      history.push("/auth/login");
     }
   };
 };
