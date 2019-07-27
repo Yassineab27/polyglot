@@ -84,3 +84,17 @@ export const getMyProfile = () => {
     }
   };
 };
+
+export const getPosts = () => {
+  return async dispatch => {
+    try {
+      const response = await axios.get("/posts");
+      dispatch({ type: "GET_POSTS", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};

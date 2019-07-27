@@ -197,6 +197,16 @@ img {
   border-radius: 10px;
 }
 
+.main-color {
+  color: var(--color-main);
+}
+.grey-text {
+  color: #ccc;
+}
+
+.danger-text {
+  color: var(--color-danger);
+}
 /* .bg-light,
 .badge-light {
   border: #ccc solid 1px;
