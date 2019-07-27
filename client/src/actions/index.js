@@ -85,6 +85,24 @@ export const getMyProfile = () => {
   };
 };
 
+export const getAllProfiles = () => {
+  return async dispatch => {
+    try {
+      const response = await axios.get("/profiles");
+      dispatch({ type: "GET_ALL_PROFILES", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const searchPal = search => {
+  return { type: "SEARCH_PAL", payload: search };
+};
+
 export const getPosts = () => {
   return async dispatch => {
     try {

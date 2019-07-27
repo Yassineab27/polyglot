@@ -35,6 +35,12 @@ const Navbar = props => {
               Posts
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/profiles" activeClassName="navbar-active">
+              Pals
+            </NavLink>
+          </li>
+          <li style={{ marginRight: "1rem" }}>|</li>
           <li>{profile}</li>
           <li>
             <NavLink to="/users/me" activeClassName="navbar-active">

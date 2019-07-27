@@ -9,7 +9,8 @@ import Register from "./auth/Register";
 import Login from "./auth/Login";
 import User from "./user/User";
 import CreateProfile from "./profile/CreateProfile";
-import Profile from "./profile/Profile";
+import MyProfile from "./profile/MyProfile";
+import AllProfiles from "./profile/AllProfiles";
 import Posts from "./posts/Posts";
 
 import "../index.css";
@@ -27,7 +28,8 @@ const App = () => {
               <Route path="/auth/register" component={Register} />
               <Route path="/auth/Login" component={Login} />
               <Route path="/users/me" component={User} />
-              <Route path="/profiles/me" component={Profile} />
+              <Route exact path="/profiles" component={AllProfiles} />
+              <Route path="/profiles/me" component={MyProfile} />
               <Route path="/profiles/new" component={CreateProfile} />
               <Route path="/posts" component={Posts} />
             </div>
