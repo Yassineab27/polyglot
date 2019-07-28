@@ -11,6 +11,7 @@ import User from "./user/User";
 import CreateProfile from "./profile/CreateProfile";
 import MyProfile from "./profile/MyProfile";
 import AllProfiles from "./profile/AllProfiles";
+import RandomProfile from "./profile/RandomProfile";
 import Posts from "./posts/Posts";
 
 import "../index.css";
@@ -31,6 +32,11 @@ const App = () => {
               <Route exact path="/profiles" component={AllProfiles} />
               <Route exact path="/profiles/me" component={MyProfile} />
               <Route exact path="/profiles/new" component={CreateProfile} />
+              <Route
+                exact
+                path="/profiles/user/:user_id"
+                component={RandomProfile}
+              />
               <Route path="/posts" component={Posts} />
             </div>
           </React.Fragment>

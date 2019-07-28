@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 
 import { getMyProfile } from "../../actions";
 import { connect } from "react-redux";
@@ -16,11 +15,6 @@ class Profile extends Component {
       return <Loader />;
     }
     const { profile, posts } = this.props.info;
-    const { hasProfile } = this.props;
-
-    // if (!hasProfile) {
-    //   return <Redirect to="/profiles/new" />;
-    // }
 
     return (
       <div>

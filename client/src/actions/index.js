@@ -73,6 +73,7 @@ export const logOut = () => {
 export const getMyProfile = () => {
   return async dispatch => {
     try {
+      dispatch(resetState());
       const response = await axios.get("/profiles/me");
       dispatch({ type: "GET_MY_PROFILE", payload: response.data });
     } catch (err) {
@@ -110,7 +111,7 @@ export const createProfile = profile => {
       localStorage.setItem("hasProfile", JSON.stringify(true));
       dispatch({ type: "CREATE_PROFILE", payload: response.data });
       dispatch(setProfile());
-      history.push("/posts");
+      history.push("/profiles/me");
     } catch (err) {
       dispatch({
         type: "SET_ALERT",
@@ -118,6 +119,25 @@ export const createProfile = profile => {
       });
     }
   };
+};
+
+export const getRandomProfile = userId => {
+  return async dispatch => {
+    try {
+      dispatch(resetState());
+      const response = await axios.get(`/profiles/user/${userId}`);
+      dispatch({ type: "GET_RANDOM_PROFILE", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+const resetState = () => {
+  return { type: "RESET_STATE" };
 };
 
 // POSTS

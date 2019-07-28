@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Profile = props => {
-  const { profile, user } = props;
+  const { profile } = props;
   return (
     <div>
       <h2>
-        {profile.owner.firstName} {profile.owner.lastName}
+        <Link to={`/profiles/user/${profile.owner._id}`}>
+          {profile.owner.firstName} {profile.owner.lastName}
+        </Link>
       </h2>
     </div>
   );

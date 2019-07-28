@@ -14,8 +14,13 @@ class AllProfiles extends Component {
     if (!this.props.profiles) {
       return <Loader />;
     }
-    const profiles = this.props.profiles.length ? (
-      this.props.profiles.map(profile => {
+
+    const filterProfiles = this.props.profiles.filter(
+      profile => profile.owner._id !== this.props.user._id
+    );
+
+    const profiles = filterProfiles.length ? (
+      filterProfiles.map(profile => {
         return <Profile key={profile._id} profile={profile} />;
       })
     ) : (
@@ -34,8 +39,9 @@ class AllProfiles extends Component {
 
 const mapStateToProps = state => {
   const { profiles, search } = state.prof;
+  const { user } = state.auth;
   if (!search) {
-    return { profiles };
+    return { profiles, user };
   }
   return {
     profiles: profiles.filter(
@@ -44,7 +50,8 @@ const mapStateToProps = state => {
         profile.owner.firstName.toLowerCase().startsWith(search) ||
         profile.languageN.toLowerCase().startsWith(search) ||
         profile.languageN.startsWith(search)
-    )
+    ),
+    user
   };
 };
 
