@@ -103,6 +103,24 @@ export const searchPal = search => {
   return { type: "SEARCH_PAL", payload: search };
 };
 
+export const createProfile = profile => {
+  return async dispatch => {
+    try {
+      const response = await axios.post("/profiles/new", profile);
+      localStorage.setItem("hasProfile", JSON.stringify(true));
+      dispatch({ type: "CREATE_PROFILE", payload: response.data });
+      dispatch(setProfile());
+      history.push("/posts");
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+// POSTS
 export const getPosts = () => {
   return async dispatch => {
     try {

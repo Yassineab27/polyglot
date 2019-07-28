@@ -14,11 +14,11 @@ const Navbar = props => {
   };
 
   const profile = props.hasProfile ? (
-    <NavLink to="/profiles/me" activeClassName="navbar-active">
+    <NavLink exact to="/profiles/me" activeClassName="navbar-active">
       <i className="fas fa-user-circle fa-lg" />
     </NavLink>
   ) : (
-    <NavLink to="/profiles/new" activeClassName="navbar-active">
+    <NavLink exact to="/profiles/new" activeClassName="navbar-active">
       <i className="fas fa-user-circle fa-lg" />
     </NavLink>
   );
@@ -36,7 +36,7 @@ const Navbar = props => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/profiles" activeClassName="navbar-active">
+            <NavLink exact to="/profiles" activeClassName="navbar-active">
               Pals
             </NavLink>
           </li>

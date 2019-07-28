@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { setAlert } from "../../actions";
+import { setAlert, createProfile } from "../../actions";
 
 const CreateProfile = props => {
   const [age, setAge] = useState("");
@@ -12,13 +12,13 @@ const CreateProfile = props => {
   const [languageL, setLanguageL] = useState("");
   const [interests, setInterests] = useState("");
 
-  const { profile, isAuthenticated } = props.auth;
+  const { hasProfile, isAuthenticated } = props.auth;
   if (!isAuthenticated) {
     return <Redirect to="/auth/login" />;
   }
 
-  if (profile) {
-    return <Redirect to="/posts" />;
+  if (hasProfile) {
+    return <Redirect to="/profiles/me" />;
   }
 
   const handleSubmit = e => {
@@ -39,6 +39,7 @@ const CreateProfile = props => {
         interests
       };
       console.log(profile);
+      props.createProfile(profile);
     }
   };
 
@@ -198,5 +199,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setAlert }
+  { setAlert, createProfile }
 )(CreateProfile);

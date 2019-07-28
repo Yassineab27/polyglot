@@ -7,6 +7,15 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "CREATE_PROFILE":
+      return {
+        ...state,
+        profileInfo: { profile: action.payload, posts: [] },
+        alert: {
+          msg: "Your profile was created successfully.",
+          type: "success"
+        }
+      };
     case "SEARCH_PAL":
       return { ...state, search: action.payload };
     case "GET_ALL_PROFILES":

@@ -29,8 +29,8 @@ const App = () => {
               <Route path="/auth/Login" component={Login} />
               <Route path="/users/me" component={User} />
               <Route exact path="/profiles" component={AllProfiles} />
-              <Route path="/profiles/me" component={MyProfile} />
-              <Route path="/profiles/new" component={CreateProfile} />
+              <Route exact path="/profiles/me" component={MyProfile} />
+              <Route exact path="/profiles/new" component={CreateProfile} />
               <Route path="/posts" component={Posts} />
             </div>
           </React.Fragment>

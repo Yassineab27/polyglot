@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 import { getMyProfile } from "../../actions";
 import { connect } from "react-redux";
@@ -9,17 +10,24 @@ class Profile extends Component {
   componentDidMount() {
     this.props.getMyProfile();
   }
+
   render() {
     if (!this.props.info) {
       return <Loader />;
     }
     const { profile, posts } = this.props.info;
-    const { user } = this.props;
+    const { hasProfile } = this.props;
+
+    // if (!hasProfile) {
+    //   return <Redirect to="/profiles/new" />;
+    // }
+
     return (
       <div>
         <h2 className="large text-center">My Profile</h2>
-        <h2>{user.firstName}</h2>
-        <h2>{profile.status}</h2>
+        <h2>
+          {profile.owner.firstName} {profile.owner.lastName}
+        </h2>
         <div>
           {posts.map(post => {
             return (
@@ -36,7 +44,10 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => {
-  return { info: state.prof.profileInfo, user: state.auth.user };
+  return {
+    info: state.prof.profileInfo,
+    hasProfile: state.auth.hasProfile
+  };
 };
 
 export default connect(

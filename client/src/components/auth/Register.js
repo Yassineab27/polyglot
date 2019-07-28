@@ -40,7 +40,9 @@ const Register = props => {
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit} className="form">
-        <h2 className="large text-center py-1">Register</h2>
+        <h2 className="large text-center py-1">
+          Register <i className="fas fa-user-plus main-color" />
+        </h2>
         <div className="underline" />
         <div className="form-group">
           <input

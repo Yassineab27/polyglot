@@ -26,7 +26,9 @@ const Login = props => {
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit} className="form">
-        <h2 className="large text-center py-1">Login</h2>
+        <h2 className="large text-center py-1">
+          <i className="fas fa-unlock-alt main-color" /> Login
+        </h2>
         <div className="underline" />
         <div className="form-group">
           <input
