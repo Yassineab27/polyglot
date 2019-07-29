@@ -3,6 +3,7 @@
   --color-main: #4267b2;
   --color-dark: #343a40;
   --color-light: #f4f4f4;
+  --color-grey: rgb(223, 223, 223);
   --color-danger: #dc3545;
   --color-success: #28a745;
   --color-warning: #d6ba1c;
@@ -37,11 +38,9 @@ img {
 
 .container {
   max-width: 1100px;
-  margin: auto;
+  margin: 0.2rem auto 2rem auto;
   overflow: hidden;
   padding: 0 2rem;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
 }
 
 /* Text Styles*/
@@ -197,7 +196,7 @@ img {
   border-radius: 10px;
 }
 
-.main-color {
+.main-text {
   color: var(--color-main);
 }
 .grey-text {
@@ -207,12 +206,16 @@ img {
 .danger-text {
   color: var(--color-danger);
 }
+
+.white-text {
+  color: var(--color-light);
+}
 /* .bg-light,
 .badge-light {
   border: #ccc solid 1px;
 } */
 
-.round-img {
+.image-round {
   border-radius: 50%;
 }
 
@@ -312,4 +315,71 @@ img {
 .form button {
   padding: 0.5rem;
   font-size: 1.2rem;
+}
+
+/* Profiles Page */
+.profiles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+}
+.profile {
+  display: grid;
+  justify-items: center;
+  background: var(--color-light);
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: 15px;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.profile-info {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Profile Page */
+.profile-grid {
+  display: grid;
+  grid-template-areas:
+    "top top"
+    "about about"
+    "exp edu"
+    "github github";
+  grid-gap: 1rem;
+}
+
+.profile-top {
+  grid-area: top;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.profile-top img {
+  width: 250px;
+}
+
+.profile-top .icons a {
+  color: #fff;
+  margin: 0 0.3rem;
+}
+
+.profile-top .icons a:hover {
+  color: var(--color-dark);
+}
+
+.profile-about {
+  grid-area: about;
+  text-align: center;
+}
+
+.profile-about .skills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }

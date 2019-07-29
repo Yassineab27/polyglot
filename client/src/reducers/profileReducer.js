@@ -29,7 +29,7 @@ const profileReducer = (state = initialState, action) => {
       return { ...state, profiles: action.payload };
     case "GET_MY_PROFILE":
       return { ...state, profileInfo: action.payload };
-    case "RESET_STATE":
+    case "RESET_PROFILE_STATE":
       return { profileInfo: null, profiles: null, search: "", alert: null };
     default:
       return state;

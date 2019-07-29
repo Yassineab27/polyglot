@@ -153,7 +153,7 @@ export const updateProfile = newPorfile => {
 };
 
 const resetState = () => {
-  return { type: "RESET_STATE" };
+  return { type: "RESET_PROFILE_STATE" };
 };
 
 // POSTS

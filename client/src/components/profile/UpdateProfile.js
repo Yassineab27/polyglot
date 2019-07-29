@@ -28,7 +28,7 @@ class UpdateProfile extends Component {
     return (
       <Fragment>
         <h1 className="large text-main text-center">
-          <i className="fas fa-user" /> Update Your Profile
+          <i className="fas fa-user-circle" /> Update Your Profile
         </h1>
         <div className="underline" />
         <p className="text-center">

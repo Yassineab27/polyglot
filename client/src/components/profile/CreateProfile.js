@@ -19,7 +19,7 @@ class CreateProfile extends Component {
     return (
       <Fragment>
         <h1 className="large text-main text-center">
-          <i className="fas fa-user" /> Create Your Profile
+          <i className="fas fa-user-circle" /> Create Your Profile
         </h1>
         <div className="underline" />
         <p className="text text-center main-color">

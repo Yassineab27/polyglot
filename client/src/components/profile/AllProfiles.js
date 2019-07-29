@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllProfiles } from "../../actions";
 import Loader from "../layout/Loader";
-import Profile from "./Profile";
+import ProfileItem from "./ProfileItem";
 import SearchBar from "./SearchBar";
 
 class AllProfiles extends Component {
@@ -21,7 +21,7 @@ class AllProfiles extends Component {
 
     const profiles = filterProfiles.length ? (
       filterProfiles.map(profile => {
-        return <Profile key={profile._id} profile={profile} />;
+        return <ProfileItem key={profile._id} profile={profile} />;
       })
     ) : (
       <p>No Pals found.</p>
@@ -29,9 +29,13 @@ class AllProfiles extends Component {
 
     return (
       <div>
-        <h1>Profiles</h1>
+        <h1 className="large text-center">Pals</h1>
+        <div className="underline" />
+        <p className="text text-center main-text">
+          Connect with native speakers!
+        </p>
         <SearchBar />
-        {profiles}
+        <div className="profiles">{profiles}</div>
       </div>
     );
   }
