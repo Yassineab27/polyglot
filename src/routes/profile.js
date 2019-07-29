@@ -89,10 +89,8 @@ router.patch("/me", auth, async (req, res) => {
     "age",
     "country",
     "bio",
-    "status",
     "languageN",
     "languageL",
-    "work",
     "interests"
   ];
   const updates = Object.keys(req.body);

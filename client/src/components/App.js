@@ -12,6 +12,7 @@ import CreateProfile from "./profile/CreateProfile";
 import MyProfile from "./profile/MyProfile";
 import AllProfiles from "./profile/AllProfiles";
 import RandomProfile from "./profile/RandomProfile";
+import UpdateProfile from "./profile/UpdateProfile";
 import Posts from "./posts/Posts";
 
 import "../index.css";
@@ -32,6 +33,7 @@ const App = () => {
               <Route exact path="/profiles" component={AllProfiles} />
               <Route exact path="/profiles/me" component={MyProfile} />
               <Route exact path="/profiles/new" component={CreateProfile} />
+              <Route exact path="/profiles/me/edit" component={UpdateProfile} />
               <Route
                 exact
                 path="/profiles/user/:user_id"

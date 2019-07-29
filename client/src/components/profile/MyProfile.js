@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import { getMyProfile } from "../../actions";
 import { connect } from "react-redux";
@@ -32,6 +33,11 @@ class Profile extends Component {
             );
           })}
         </div>
+        <Link to="/profiles/me/edit">
+          <button className="btn btn-main btn-block form">
+            <i className="far fa-edit" /> Edit Profile
+          </button>
+        </Link>
       </div>
     );
   }

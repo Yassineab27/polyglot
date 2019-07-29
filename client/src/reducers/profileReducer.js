@@ -7,6 +7,11 @@ const initialState = {
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "UPDATE_PROFILE":
+      return {
+        ...state,
+        profileInfo: { ...state.profileInfo, profile: action.payload }
+      };
     case "GET_RANDOM_PROFILE":
       return { ...state, profileInfo: action.payload };
     case "CREATE_PROFILE":

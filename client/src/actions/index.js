@@ -96,6 +96,7 @@ export const getAllProfiles = () => {
         type: "SET_ALERT",
         payload: { msg: err.response.data.error, type: "danger" }
       });
+      history.push("/auth/login");
     }
   };
 };
@@ -127,6 +128,21 @@ export const getRandomProfile = userId => {
       dispatch(resetState());
       const response = await axios.get(`/profiles/user/${userId}`);
       dispatch({ type: "GET_RANDOM_PROFILE", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const updateProfile = newPorfile => {
+  return async dispatch => {
+    try {
+      const response = await axios.patch("/profiles/me", newPorfile);
+      dispatch({ type: "UPDATE_PROFILE", payload: response.data });
+      history.push("/profiles/me");
     } catch (err) {
       dispatch({
         type: "SET_ALERT",
