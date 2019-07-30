@@ -10,7 +10,7 @@ const authReducer = (state = initialState, action) => {
     case "LOG_OUT":
       return { user: null, profile: null, isAuthenticated: false, alert: null };
     case "SET_PROFILE":
-      return { ...state, hasProfile: true };
+      return { ...state, hasProfile: action.payload };
     case "SET_USER":
       return { ...state, user: action.payload, isAuthenticated: true };
     case "AUTH_LOGIN":

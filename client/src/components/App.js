@@ -8,6 +8,7 @@ import Alert from "./layout/Alert";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import User from "./user/User";
+import UpdateUser from "./user/UpdateUser";
 import CreateProfile from "./profile/CreateProfile";
 import MyProfile from "./profile/MyProfile";
 import AllProfiles from "./profile/AllProfiles";
@@ -29,7 +30,8 @@ const App = () => {
             <div className="container">
               <Route path="/auth/register" component={Register} />
               <Route path="/auth/Login" component={Login} />
-              <Route path="/users/me" component={User} />
+              <Route exact path="/users/me" component={User} />
+              <Route path="/users/me/edit" component={UpdateUser} />
               <Route exact path="/profiles" component={AllProfiles} />
               <Route exact path="/profiles/me" component={MyProfile} />
               <Route exact path="/profiles/new" component={CreateProfile} />

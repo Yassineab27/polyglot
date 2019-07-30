@@ -10,7 +10,7 @@ const SearchBar = props => {
     props.searchPal(search);
   }, [search]);
   return (
-    <div className="form form-group">
+    <div className="form form-group" style={{ marginBottom: "2.5rem" }}>
       <input
         type="text"
         placeholder="Search for Pals.."

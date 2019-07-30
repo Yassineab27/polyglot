@@ -138,11 +138,11 @@ img {
   color: #fff;
 }
 
-.btn-light,
-.bg-light,
-.badge-light,
-.alert-light {
-  background: var(--color-light);
+.btn-grey,
+.bg-grey,
+.badge-grey,
+.alert-grey {
+  background: var(--color-grey);
   color: #333;
 }
 
@@ -229,7 +229,7 @@ img {
   height: 3px;
   width: 5rem;
   background: var(--color-main);
-  margin: 0 auto 2rem auto;
+  margin: 0 auto 3rem auto;
 }
 
 /* NAVBAR */
@@ -331,7 +331,7 @@ img {
   border-radius: 15px;
   align-items: center;
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 0.5rem;
 }
 
 .profile-info {

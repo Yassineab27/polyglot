@@ -24,12 +24,14 @@ class AllProfiles extends Component {
         return <ProfileItem key={profile._id} profile={profile} />;
       })
     ) : (
-      <p>No Pals found.</p>
+      <h2 className="text text-center">No Pals found.</h2>
     );
 
     return (
       <div>
-        <h1 className="large text-center">Pals</h1>
+        <h1 className="large text-center">
+          <i className="fas fa-users"> </i>Pals
+        </h1>
         <div className="underline" />
         <p className="text text-center main-text">
           Connect with native speakers!
