@@ -16,7 +16,7 @@ const authReducer = (state = initialState, action) => {
     case "AUTH_LOGIN":
       return {
         user: action.payload.user,
-        hasProfile: true,
+        hasProfile: action.payload.profile,
         isAuthenticated: true,
         alert: {
           msg: `Hello, ${action.payload.user.firstName} ${

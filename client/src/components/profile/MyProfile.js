@@ -15,6 +15,7 @@ class Profile extends Component {
     if (!this.props.info) {
       return <Loader />;
     }
+
     const { profile, posts } = this.props.info;
 
     return (

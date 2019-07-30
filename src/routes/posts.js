@@ -34,9 +34,9 @@ router.get("/", auth, async (req, res) => {
       .sort({
         createdAt: -1
       });
-    if (!posts.length) {
-      return res.status(404).send({ error: "no posts found." });
-    }
+    // if (!posts.length) {
+    //   return res.status(404).send({ error: "no posts found." });
+    // }
     res.send(posts);
   } catch (err) {
     res.status(500).send(err.message);

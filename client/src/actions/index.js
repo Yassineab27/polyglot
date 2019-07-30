@@ -40,11 +40,11 @@ export const authLogin = user => {
       //   SET TOKEN IN THE HEADER
       setAuthorizationToken(response.data.token);
 
-      if (response.data.profile) {
-        localStorage.setItem("hasProfile", JSON.stringify(true));
-        history.push("/posts");
-      } else {
+      if (!response.data.profile) {
         history.push("/profiles/new");
+      } else {
+        localStorage.setItem("hasProfile", JSON.stringify(true));
+        history.push("/profiles/me");
       }
     } catch (err) {
       dispatch({
@@ -133,6 +133,7 @@ export const getRandomProfile = userId => {
         type: "SET_ALERT",
         payload: { msg: err.response.data.error, type: "danger" }
       });
+      history.push("/profiles");
     }
   };
 };

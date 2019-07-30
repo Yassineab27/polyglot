@@ -7,9 +7,13 @@ import FormProfile from "./FormProfile";
 
 class CreateProfile extends Component {
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated, hasProfile } = this.props.auth;
     if (!isAuthenticated) {
       return <Redirect to="/auth/login" />;
+    }
+
+    if (hasProfile) {
+      return <Redirect to="/profiles/me" />;
     }
 
     const handleCreateProfile = profile => {
@@ -22,7 +26,7 @@ class CreateProfile extends Component {
           <i className="fas fa-user-circle" /> Create Your Profile
         </h1>
         <div className="underline" />
-        <p className="text text-center main-color">
+        <p className="text text-center main-text">
           the more information you give about yourself the easier it is for
           others to know about you
         </p>
