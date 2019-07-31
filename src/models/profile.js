@@ -27,7 +27,7 @@ const profileSchema = new Schema(
       required: true
     },
     interests: {
-      type: [String]
+      type: Array
     }
   },
   {

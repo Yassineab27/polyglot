@@ -61,8 +61,20 @@ img {
   margin-bottom: 1rem;
 }
 
+.info {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
 .text-center {
   text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
 }
 
 /* PADDING */
@@ -138,11 +150,11 @@ img {
   color: #fff;
 }
 
-.btn-grey,
-.bg-grey,
-.badge-grey,
-.alert-grey {
-  background: var(--color-grey);
+.btn-light,
+.bg-light,
+.badge-light,
+.alert-light {
+  background: var(--color-light);
   color: #333;
 }
 
@@ -208,12 +220,8 @@ img {
 }
 
 .white-text {
-  color: var(--color-light);
+  color: #fff;
 }
-/* .bg-light,
-.badge-light {
-  border: #ccc solid 1px;
-} */
 
 .image-round {
   border-radius: 50%;
@@ -344,9 +352,8 @@ img {
   display: grid;
   grid-template-areas:
     "top top"
-    "about about"
-    "exp edu"
-    "github github";
+    "about about";
+
   grid-gap: 1rem;
 }
 
@@ -357,29 +364,31 @@ img {
   align-items: center;
   justify-content: center;
   text-align: center;
+  border-radius: 15px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.63);
 }
 
 .profile-top img {
   width: 250px;
 }
 
-.profile-top .icons a {
-  color: #fff;
-  margin: 0 0.3rem;
-}
-
-.profile-top .icons a:hover {
-  color: var(--color-dark);
-}
-
 .profile-about {
   grid-area: about;
   text-align: center;
+  border-radius: 15px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.315);
 }
 
-.profile-about .skills {
+.profile-about .interests {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.interest-info {
+  background: rgb(199, 198, 198);
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  margin: 0 0.5rem;
 }

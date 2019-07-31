@@ -13,7 +13,7 @@ const SearchBar = props => {
     <div className="form form-group" style={{ marginBottom: "2.5rem" }}>
       <input
         type="text"
-        placeholder="Search for Pals.."
+        placeholder="Search for Pals by Name or Native language.."
         name="search"
         value={search}
         onChange={e => setSearch(e.target.value)}

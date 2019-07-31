@@ -27,13 +27,16 @@ const FormProfile = props => {
         type: "warning"
       });
     } else {
+      const myInterests = interests.includes(",")
+        ? interests.split(",")
+        : [interests];
       const profile = {
         age,
         country,
         bio,
         languageN,
         languageL,
-        interests
+        interests: myInterests
       };
       console.log(profile);
       props.handleSubmit(profile);
