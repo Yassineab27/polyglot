@@ -316,7 +316,14 @@ img {
   font-size: 1.2rem;
   border: 1px solid #ccc;
   outline: none;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.13);
+}
+
+.form input[type="text"]:focus,
+.form input[type="email"]:focus,
+.form input[type="password"]:focus,
+.form select:focus,
+.form textarea:focus {
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
 }
 
 .form input[type="submit"],
@@ -340,6 +347,7 @@ img {
   align-items: center;
   padding: 1rem;
   margin: 0.5rem;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.315);
 }
 
 .profile-info {
@@ -391,4 +399,37 @@ img {
   padding: 0.5rem 1rem;
   border-radius: 15px;
   margin: 0 0.5rem;
+}
+
+/* Posts */
+.post-form .post-form-header {
+  background: var(--color-main);
+  padding: 0.5rem;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 2rem;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.315);
+}
+
+.post img {
+  width: 100px;
+}
+
+.post .comment-count {
+  background: var(--color-light);
+  color: var(--color-main);
+  padding: 0.1rem 0.2rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+.post .post-date {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
 }

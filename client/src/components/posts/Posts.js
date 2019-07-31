@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions";
 import Loader from "../layout/Loader";
-import Post from "./Post";
+import Post from "./PostItem";
 
 class Posts extends Component {
   componentDidMount() {
