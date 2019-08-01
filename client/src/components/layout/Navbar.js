@@ -32,12 +32,12 @@ const Navbar = props => {
         <ul>
           <li>
             <NavLink to="/posts" activeClassName="navbar-active">
-              <i className="fas fa-comment-dots" /> Posts
+              Community <i className="fas fa-comment-dots" />
             </NavLink>
           </li>
           <li>
             <NavLink exact to="/profiles" activeClassName="navbar-active">
-              <i className="fas fa-users" /> Pals
+              Pals <i className="fas fa-users" />
             </NavLink>
           </li>
           <li style={{ marginRight: "1rem" }}>|</li>

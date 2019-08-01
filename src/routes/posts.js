@@ -34,9 +34,6 @@ router.get("/", auth, async (req, res) => {
       .sort({
         createdAt: -1
       });
-    // if (!posts.length) {
-    //   return res.status(404).send({ error: "no posts found." });
-    // }
     res.send(posts);
   } catch (err) {
     res.status(500).send(err.message);
@@ -69,10 +66,6 @@ router.patch("/:id", auth, async (req, res) => {
     return res.status(400).send({ error: "Update Invalid." });
   }
   try {
-    // const post = await Post.findOne({
-    //   _id: req.params.id,
-    //   owner: req.user._id
-    // });
     const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).send({ error: "Post not found." });
@@ -94,10 +87,6 @@ router.patch("/:id", auth, async (req, res) => {
 // DELETE POST
 router.delete("/:id", auth, async (req, res) => {
   try {
-    // const post = await Post.findOne({
-    //   _id: req.params.id,
-    //   owner: req.user._id
-    // });
     const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).send({ error: "Post not found." });

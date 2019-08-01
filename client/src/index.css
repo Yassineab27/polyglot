@@ -402,9 +402,38 @@ img {
 }
 
 /* Posts */
-.post-form .post-form-header {
-  background: var(--color-main);
+.post-form {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 1rem;
+  align-items: center;
+  border: none;
+  margin-bottom: 5rem;
+}
+
+.post-form-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-form-display input,
+.post-form-display textarea,
+.post-form-display button {
+  width: 75%;
   padding: 0.5rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.post-form-display input:focus,
+.post-form-display textarea:focus {
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
+  outline: none;
+}
+
+.post-form img {
+  width: 170px;
 }
 
 .post {
@@ -420,9 +449,17 @@ img {
   width: 100px;
 }
 
+.community-image {
+  background: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.432)),
+    url("./images/com-image.jpg") no-repeat center center/cover;
+  height: 80vh;
+  border-radius: 15px;
+  margin-bottom: 5rem;
+}
+
 .post .comment-count {
-  background: var(--color-light);
-  color: var(--color-main);
+  background: var(--color-danger);
+  color: var(--color-light);
   padding: 0.1rem 0.2rem;
   border-radius: 5px;
   font-size: 0.8rem;

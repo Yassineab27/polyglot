@@ -171,3 +171,60 @@ export const getPosts = () => {
     }
   };
 };
+
+export const addPost = post => {
+  return async dispatch => {
+    try {
+      const response = await axios.post("/posts", post);
+
+      dispatch({ type: "CREATE_POST", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const deletePost = id => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/posts/${id}`);
+      dispatch({ type: "DELETE_POST", payload: id });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const updatePost = (id, newPost) => {
+  return async dispatch => {
+    try {
+      const response = await axios.patch(`/posts/${id}`, newPost);
+      dispatch({ type: "UPDATE_POST", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const getPost = id => {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`/posts/${id}`);
+      dispatch({ type: "GET_SINGLE_POST", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
