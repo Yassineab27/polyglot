@@ -1,14 +1,13 @@
 const initialState = {
   user: null,
   hasProfile: null,
-  isAuthenticated: false,
-  alert: null
+  isAuthenticated: false
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOG_OUT":
-      return { user: null, profile: null, isAuthenticated: false, alert: null };
+      return { user: null, profile: null, isAuthenticated: false };
     case "SET_PROFILE":
       return { ...state, hasProfile: true };
     case "SET_USER":
@@ -17,25 +16,11 @@ const authReducer = (state = initialState, action) => {
       return {
         user: action.payload.user,
         hasProfile: action.payload.profile,
-        isAuthenticated: true,
-        alert: {
-          msg: `Hello, ${action.payload.user.firstName} ${
-            action.payload.user.lastName
-          }, you were logged in successfully!`,
-          type: "success"
-        }
+        isAuthenticated: true
       };
-    case "REMOVE_ALERT":
-      return { ...state, alert: null };
-    case "SET_ALERT":
-      return { ...state, alert: action.payload };
     case "AUTH_REGISTER":
       return {
-        ...state,
-        alert: {
-          msg: "Registered successfully. Please Login!",
-          type: "success"
-        }
+        ...state
       };
     default:
       return state;

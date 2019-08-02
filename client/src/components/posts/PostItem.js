@@ -17,7 +17,7 @@ const Post = props => {
               alt={post.owner.firstName}
             />
             <h4>
-              {props.post.owner.firstName} {post.owner.lastName}
+              {post.owner.firstName} {post.owner.lastName}
             </h4>
           </Link>
         </div>

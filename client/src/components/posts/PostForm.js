@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { connect } from "react-redux";
-import { addPost } from "../../actions";
+import { addPost, setAlert } from "../../actions";
 
 const PostForm = props => {
   const [title, setTitle] = useState("");
@@ -9,12 +9,19 @@ const PostForm = props => {
 
   const onSubmit = e => {
     e.preventDefault();
+    if (!props.hasProfile) {
+      return props.setAlert({
+        msg: "You need to create a profile first.",
+        type: "danger"
+      });
+    }
 
     const post = {
       title,
       description
     };
     console.log(post);
+    props.addPost(post);
 
     setTitle("");
     setDescription("");
@@ -53,10 +60,10 @@ const PostForm = props => {
 };
 
 const mapStateToProps = state => {
-  return { user: state.auth.user };
+  return { hasProfile: state.auth.hasProfile, user: state.auth.user };
 };
 
 export default connect(
   mapStateToProps,
-  { addPost }
+  { addPost, setAlert }
 )(PostForm);

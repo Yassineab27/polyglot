@@ -18,12 +18,15 @@ class Alert extends Component {
         </h4>
       );
     }
+
     return null;
   }
 }
 
 const mapStateToProps = state => {
-  return { alert: state.auth.alert };
+  return {
+    alert: state.alerts.alert
+  };
 };
 
 export default connect(

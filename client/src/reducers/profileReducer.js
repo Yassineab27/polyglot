@@ -1,8 +1,7 @@
 const initialState = {
   profileInfo: null,
   profiles: null,
-  search: "",
-  alert: null
+  search: ""
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -17,11 +16,7 @@ const profileReducer = (state = initialState, action) => {
     case "CREATE_PROFILE":
       return {
         ...state,
-        profileInfo: { profile: action.payload, posts: [] },
-        alert: {
-          msg: "Your profile was created successfully.",
-          type: "success"
-        }
+        profileInfo: { profile: action.payload, posts: [] }
       };
     case "SEARCH_PAL":
       return { ...state, search: action.payload };
@@ -30,7 +25,7 @@ const profileReducer = (state = initialState, action) => {
     case "GET_MY_PROFILE":
       return { ...state, profileInfo: action.payload };
     case "RESET_PROFILE_STATE":
-      return { profileInfo: null, profiles: null, search: "", alert: null };
+      return { profileInfo: null, profiles: null, search: "" };
     default:
       return state;
   }

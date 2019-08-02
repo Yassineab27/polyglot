@@ -1,7 +1,6 @@
 const initialState = {
   posts: null,
-  currentPost: null,
-  alert: null
+  currentPost: null
 };
 
 const postReducer = (state = initialState, action) => {
@@ -17,21 +16,18 @@ const postReducer = (state = initialState, action) => {
           } else {
             return post;
           }
-        }),
-        alert: { msg: "Post updated successfully.", type: "success" }
+        })
       };
     case "DELETE_POST":
       return {
         ...state,
-        posts: state.posts.filter(post => post._id !== action.payload),
-        alert: { msg: "Post deleted successfully.", type: "success" }
+        posts: state.posts.filter(post => post._id !== action.payload)
       };
-    case "CREATE_POST":
-      return {
-        ...state,
-        posts: [...state.posts, action.payload],
-        alert: { msg: "Post created successfully.", type: "success" }
-      };
+    // case "CREATE_POST":
+    //   return {
+    //     ...state,
+    //     posts: [action.payload, ...state.posts]
+    //   };
     case "GET_POSTS":
       return { ...state, posts: action.payload };
     default:

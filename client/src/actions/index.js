@@ -7,6 +7,13 @@ export const authRegister = user => {
   return async dispatch => {
     try {
       await axios.post("/auth/register", user);
+      dispatch({
+        type: "SET_ALERT",
+        payload: {
+          msg: "Registered successfully. Please Login!",
+          type: "success"
+        }
+      });
       dispatch({ type: "AUTH_REGISTER" });
       history.push("/auth/login");
     } catch (err) {
@@ -31,26 +38,28 @@ export const setAlert = alert => {
 
 export const authLogin = user => {
   return async dispatch => {
-    try {
-      const response = await axios.post("/auth/login", user);
-      dispatch({ type: "AUTH_LOGIN", payload: response.data });
-      //   LOCAL STORAGE SAVE
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      //   SET TOKEN IN THE HEADER
-      setAuthorizationToken(response.data.token);
-
-      if (!response.data.profile) {
-        history.push("/profiles/new");
-      } else {
-        localStorage.setItem("hasProfile", JSON.stringify(true));
-        history.push("/profiles/me");
+    const response = await axios.post("/auth/login", user);
+    dispatch({
+      type: "SET_ALERT",
+      payload: {
+        msg: `Hello, ${response.data.user.firstName} ${
+          response.data.user.lastName
+        }, you were logged in successfully!`,
+        type: "success"
       }
-    } catch (err) {
-      dispatch({
-        type: "SET_ALERT",
-        payload: { msg: err.response.data.error, type: "danger" }
-      });
+    });
+    dispatch({ type: "AUTH_LOGIN", payload: response.data });
+    //   LOCAL STORAGE SAVE
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("user", JSON.stringify(response.data.user));
+    //   SET TOKEN IN THE HEADER
+    setAuthorizationToken(response.data.token);
+
+    if (!response.data.profile) {
+      history.push("/profiles/new");
+    } else {
+      localStorage.setItem("hasProfile", JSON.stringify(true));
+      history.push("/posts");
     }
   };
 };
@@ -110,6 +119,13 @@ export const createProfile = profile => {
     try {
       const response = await axios.post("/profiles/new", profile);
       localStorage.setItem("hasProfile", JSON.stringify(true));
+      dispatch({
+        type: "SET_ALERT",
+        payload: {
+          msg: "Your profile was created successfully.",
+          type: "success"
+        }
+      });
       dispatch({ type: "CREATE_PROFILE", payload: response.data });
       dispatch(setProfile());
       history.push("/profiles/me");
@@ -142,6 +158,13 @@ export const updateProfile = newPorfile => {
   return async dispatch => {
     try {
       const response = await axios.patch("/profiles/me", newPorfile);
+      dispatch({
+        type: "SET_ALERT",
+        payload: {
+          msg: "Your profile was updated successfully.",
+          type: "success"
+        }
+      });
       dispatch({ type: "UPDATE_PROFILE", payload: response.data });
       history.push("/profiles/me");
     } catch (err) {
@@ -164,10 +187,7 @@ export const getPosts = () => {
       const response = await axios.get("/posts");
       dispatch({ type: "GET_POSTS", payload: response.data });
     } catch (err) {
-      dispatch({
-        type: "SET_ALERT",
-        payload: { msg: err.response.data.error, type: "danger" }
-      });
+      history.push("/auth/login");
     }
   };
 };
@@ -175,9 +195,13 @@ export const getPosts = () => {
 export const addPost = post => {
   return async dispatch => {
     try {
-      const response = await axios.post("/posts", post);
-
-      dispatch({ type: "CREATE_POST", payload: response.data });
+      await axios.post("/posts", post);
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: "Post created successfully.", type: "success" }
+      });
+      // dispatch({ type: "CREATE_POST", payload: response.data });
+      dispatch(getPosts());
     } catch (err) {
       dispatch({
         type: "SET_ALERT",
@@ -191,6 +215,10 @@ export const deletePost = id => {
   return async dispatch => {
     try {
       await axios.delete(`/posts/${id}`);
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: "Post deleted successfully.", type: "success" }
+      });
       dispatch({ type: "DELETE_POST", payload: id });
     } catch (err) {
       dispatch({
@@ -205,6 +233,10 @@ export const updatePost = (id, newPost) => {
   return async dispatch => {
     try {
       const response = await axios.patch(`/posts/${id}`, newPost);
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: "Post updated successfully.", type: "success" }
+      });
       dispatch({ type: "UPDATE_POST", payload: response.data });
     } catch (err) {
       dispatch({

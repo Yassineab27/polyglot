@@ -449,13 +449,13 @@ img {
   width: 100px;
 }
 
-.community-image {
+/* .community-image {
   background: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.432)),
     url("./images/com-image.jpg") no-repeat center center/cover;
   height: 80vh;
   border-radius: 15px;
   margin-bottom: 5rem;
-}
+} */
 
 .post .comment-count {
   background: var(--color-danger);

@@ -20,6 +20,11 @@ router.post("/", auth, async (req, res) => {
       owner: req.user._id
     });
     await newPost.save();
+    // const newPostUser = {
+    //   avatar: req.user.avatar,
+    //   firstName: req.user.firstName,
+    //   lastName: req.user.lastName
+    // };
     res.status(201).send(newPost);
   } catch (err) {
     res.status(400).send(err.message);
