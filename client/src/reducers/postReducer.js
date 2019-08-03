@@ -5,9 +5,7 @@ const initialState = {
 
 const postReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_SINGLE_POST":
-      return { ...state, currentPost: action.payload };
-    case "UPDATE_POST":
+    case "DISLIKE_POST":
       return {
         ...state,
         posts: state.posts.map(post => {
@@ -18,6 +16,19 @@ const postReducer = (state = initialState, action) => {
           }
         })
       };
+    case "LIKE_POST":
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+          if (post._id === action.payload._id) {
+            return action.payload;
+          } else {
+            return post;
+          }
+        })
+      };
+    case "GET_SINGLE_POST":
+      return { ...state, currentPost: action.payload };
     case "DELETE_POST":
       return {
         ...state,

@@ -20,11 +20,6 @@ router.post("/", auth, async (req, res) => {
       owner: req.user._id
     });
     await newPost.save();
-    // const newPostUser = {
-    //   avatar: req.user.avatar,
-    //   firstName: req.user.firstName,
-    //   lastName: req.user.lastName
-    // };
     res.status(201).send(newPost);
   } catch (err) {
     res.status(400).send(err.message);
@@ -62,33 +57,6 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
-// PATCH POST
-router.patch("/:id", auth, async (req, res) => {
-  const allowedUpdates = ["title", "description"];
-  const updates = Object.keys(req.body);
-  const isAllowed = updates.every(update => allowedUpdates.includes(update));
-  if (!isAllowed) {
-    return res.status(400).send({ error: "Update Invalid." });
-  }
-  try {
-    const post = await Post.findById(req.params.id);
-    if (!post) {
-      return res.status(404).send({ error: "Post not found." });
-    }
-    if (post.owner.toString() !== req.user._id.toString()) {
-      return res
-        .status(400)
-        .send({ error: "You can only update your won posts." });
-    }
-    updates.forEach(update => (post[update] = req.body[update]));
-
-    await post.save();
-    res.send(post);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
-});
-
 // DELETE POST
 router.delete("/:id", auth, async (req, res) => {
   try {
@@ -117,7 +85,11 @@ router.patch("/like/:id", auth, async (req, res) => {
       .send({ error: "You need to create a profile first." });
   }
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate("owner", [
+      "avatar",
+      "firstName",
+      "lastName"
+    ]);
     if (!post) {
       return res.status(404).send("Post not found.");
     }
@@ -127,13 +99,13 @@ router.patch("/like/:id", auth, async (req, res) => {
         like => like.owner.toString() === req.user._id.toString()
       ).length > 0
     ) {
-      return res.status(400).send({ error: "You can like only once." });
+      return null;
     }
 
     post.likes.push({ owner: req.user._id });
     await post.save();
 
-    res.send({ message: "Post Liked!", post });
+    res.send(post);
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -142,7 +114,11 @@ router.patch("/like/:id", auth, async (req, res) => {
 // DISLIKE POST
 router.patch("/dislike/:id", auth, async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate("owner", [
+      "avatar",
+      "firstName",
+      "lastName"
+    ]);
     if (!post) {
       return res.status(400).send({ error: "Post not found." });
     }

@@ -3,9 +3,38 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 
 import { connect } from "react-redux";
+import { deletePost, likePost, dislikePost } from "../../actions";
 
 const Post = props => {
   const { post, user } = props;
+
+  const handleDelete = postId => {
+    const confirm = window.confirm(
+      "If you delete your post you are going to lose all the comments. Are you sure you want to delete the post ?!"
+    );
+    if (confirm) {
+      return props.deletePost(postId);
+    }
+  };
+
+  const likeColor = post.likes.find(like => like.owner === user._id) ? (
+    <i className="fas fa-thumbs-up main-text" />
+  ) : (
+    <i className="fas fa-thumbs-up" />
+  );
+
+  const handleLikes = postId => {
+    if (!post.likes.filter(like => like.owner === user._id).length) {
+      return props.likePost(postId);
+    }
+  };
+
+  const handleDislike = postId => {
+    if (post.likes.filter(like => like.owner === user._id).length) {
+      return props.dislikePost(postId);
+    }
+  };
+
   return (
     <div className="posts">
       <div className="post bg-white p-1 my-1">
@@ -28,13 +57,20 @@ const Post = props => {
             Posted on{" "}
             <Moment format="YYYY/MM/DD HH:mm">{post.createdAt}</Moment>
           </p>
-          <button className="btn btn-light">
-            <i className="fas fa-thumbs-up" />
+          <button
+            onClick={() => handleLikes(post._id)}
+            className="btn btn-light"
+          >
+            {likeColor}
+
             {post.likes.length ? (
               <span className="main-text"> {post.likes.length}</span>
             ) : null}
           </button>
-          <button className="btn btn-light">
+          <button
+            onClick={() => handleDislike(post._id)}
+            className="btn btn-light"
+          >
             <i className="fas fa-thumbs-down" />
           </button>
           <Link to={`/posts/${post._id}`} className="btn btn-main">
@@ -44,7 +80,10 @@ const Post = props => {
             ) : null}
           </Link>
           {post.owner._id === user._id ? (
-            <button className="btn btn-danger">
+            <button
+              onClick={() => handleDelete(post._id)}
+              className="btn btn-danger"
+            >
               <i className="fas fa-trash-alt" />
             </button>
           ) : null}
@@ -58,4 +97,7 @@ const mapStateToProps = state => {
   return { user: state.auth.user };
 };
 
-export default connect(mapStateToProps)(Post);
+export default connect(
+  mapStateToProps,
+  { deletePost, likePost, dislikePost }
+)(Post);

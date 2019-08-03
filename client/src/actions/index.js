@@ -158,6 +158,7 @@ export const updateProfile = newPorfile => {
   return async dispatch => {
     try {
       const response = await axios.patch("/profiles/me", newPorfile);
+      dispatch({ type: "UPDATE_PROFILE", payload: response.data });
       dispatch({
         type: "SET_ALERT",
         payload: {
@@ -165,7 +166,6 @@ export const updateProfile = newPorfile => {
           type: "success"
         }
       });
-      dispatch({ type: "UPDATE_PROFILE", payload: response.data });
       history.push("/profiles/me");
     } catch (err) {
       dispatch({
@@ -196,12 +196,12 @@ export const addPost = post => {
   return async dispatch => {
     try {
       await axios.post("/posts", post);
+      dispatch(getPosts());
       dispatch({
         type: "SET_ALERT",
         payload: { msg: "Post created successfully.", type: "success" }
       });
       // dispatch({ type: "CREATE_POST", payload: response.data });
-      dispatch(getPosts());
     } catch (err) {
       dispatch({
         type: "SET_ALERT",
@@ -215,11 +215,11 @@ export const deletePost = id => {
   return async dispatch => {
     try {
       await axios.delete(`/posts/${id}`);
+      dispatch({ type: "DELETE_POST", payload: id });
       dispatch({
         type: "SET_ALERT",
         payload: { msg: "Post deleted successfully.", type: "success" }
       });
-      dispatch({ type: "DELETE_POST", payload: id });
     } catch (err) {
       dispatch({
         type: "SET_ALERT",
@@ -229,29 +229,59 @@ export const deletePost = id => {
   };
 };
 
-export const updatePost = (id, newPost) => {
-  return async dispatch => {
-    try {
-      const response = await axios.patch(`/posts/${id}`, newPost);
-      dispatch({
-        type: "SET_ALERT",
-        payload: { msg: "Post updated successfully.", type: "success" }
-      });
-      dispatch({ type: "UPDATE_POST", payload: response.data });
-    } catch (err) {
-      dispatch({
-        type: "SET_ALERT",
-        payload: { msg: err.response.data.error, type: "danger" }
-      });
-    }
-  };
-};
+// export const updatePost = (id, newPost) => {
+//   return async dispatch => {
+//     try {
+//       const response = await axios.patch(`/posts/${id}`, newPost);
+//       dispatch({
+//         type: "SET_ALERT",
+//         payload: { msg: "Post updated successfully.", type: "success" }
+//       });
+//       dispatch({ type: "UPDATE_POST", payload: response.data });
+//     } catch (err) {
+//       dispatch({
+//         type: "SET_ALERT",
+//         payload: { msg: err.response.data.error, type: "danger" }
+//       });
+//     }
+//   };
+// };
 
 export const getPost = id => {
   return async dispatch => {
     try {
       const response = await axios.get(`/posts/${id}`);
       dispatch({ type: "GET_SINGLE_POST", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const likePost = postId => {
+  return async dispatch => {
+    try {
+      const response = await axios.patch(`/posts/like/${postId}`);
+
+      dispatch({ type: "LIKE_POST", payload: response.data });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const dislikePost = postId => {
+  return async dispatch => {
+    try {
+      const response = await axios.patch(`/posts/dislike/${postId}`);
+
+      dispatch({ type: "DISLIKE_POST", payload: response.data });
     } catch (err) {
       dispatch({
         type: "SET_ALERT",
