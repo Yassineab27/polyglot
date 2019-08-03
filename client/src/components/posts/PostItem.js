@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 
 import { connect } from "react-redux";
-import { deletePost, likePost, dislikePost } from "../../actions";
+import {
+  deletePost,
+  likePost,
+  dislikePost,
+  setCurrentPost
+} from "../../actions";
 
 const Post = props => {
   const { post, user } = props;
@@ -22,6 +27,13 @@ const Post = props => {
   ) : (
     <i className="fas fa-thumbs-up" />
   );
+
+  const deleteButton =
+    post.owner._id === user._id ? (
+      <button onClick={() => handleDelete(post._id)} className="btn btn-danger">
+        <i className="fas fa-trash-alt" />
+      </button>
+    ) : null;
 
   const handleLikes = postId => {
     if (!post.likes.filter(like => like.owner === user._id).length) {
@@ -73,20 +85,17 @@ const Post = props => {
           >
             <i className="fas fa-thumbs-down" />
           </button>
-          <Link to={`/posts/${post._id}`} className="btn btn-main">
+          <Link
+            onClick={() => props.setCurrentPost(post._id)}
+            to={`/posts/${post._id}`}
+            className="btn btn-main"
+          >
             Comments{" "}
             {post.comments.length ? (
               <span className="comment-count">{post.comments.length}</span>
             ) : null}
           </Link>
-          {post.owner._id === user._id ? (
-            <button
-              onClick={() => handleDelete(post._id)}
-              className="btn btn-danger"
-            >
-              <i className="fas fa-trash-alt" />
-            </button>
-          ) : null}
+          {deleteButton}
         </div>
       </div>
     </div>
@@ -99,5 +108,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { deletePost, likePost, dislikePost }
+  { deletePost, likePost, dislikePost, setCurrentPost }
 )(Post);

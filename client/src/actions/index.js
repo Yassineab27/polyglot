@@ -184,6 +184,7 @@ const resetState = () => {
 export const getPosts = () => {
   return async dispatch => {
     try {
+      dispatch(resetPostState());
       const response = await axios.get("/posts");
       dispatch({ type: "GET_POSTS", payload: response.data });
     } catch (err) {
@@ -229,24 +230,6 @@ export const deletePost = id => {
   };
 };
 
-// export const updatePost = (id, newPost) => {
-//   return async dispatch => {
-//     try {
-//       const response = await axios.patch(`/posts/${id}`, newPost);
-//       dispatch({
-//         type: "SET_ALERT",
-//         payload: { msg: "Post updated successfully.", type: "success" }
-//       });
-//       dispatch({ type: "UPDATE_POST", payload: response.data });
-//     } catch (err) {
-//       dispatch({
-//         type: "SET_ALERT",
-//         payload: { msg: err.response.data.error, type: "danger" }
-//       });
-//     }
-//   };
-// };
-
 export const getPost = id => {
   return async dispatch => {
     try {
@@ -289,4 +272,12 @@ export const dislikePost = postId => {
       });
     }
   };
+};
+
+export const setCurrentPost = postId => {
+  return { type: "SET_CURRENT_POST", payload: postId };
+};
+
+export const resetPostState = () => {
+  return { type: "RESET_POST_STATE" };
 };

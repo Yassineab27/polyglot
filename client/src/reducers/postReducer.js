@@ -5,6 +5,11 @@ const initialState = {
 
 const postReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "SET_CURRENT_POST":
+      return {
+        ...state,
+        currentPost: state.posts.find(post => post._id === action.payload)
+      };
     case "DISLIKE_POST":
       return {
         ...state,
@@ -41,6 +46,11 @@ const postReducer = (state = initialState, action) => {
     //   };
     case "GET_POSTS":
       return { ...state, posts: action.payload };
+    case "RESET_POST_STATE":
+      return {
+        posts: null,
+        currentPost: null
+      };
     default:
       return state;
   }

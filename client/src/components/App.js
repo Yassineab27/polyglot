@@ -15,6 +15,7 @@ import AllProfiles from "./profile/AllProfiles";
 import RandomProfile from "./profile/RandomProfile";
 import UpdateProfile from "./profile/UpdateProfile";
 import Posts from "./posts/Posts";
+import SinglePost from "./posts/SinglePost";
 
 import "../index.css";
 
@@ -41,7 +42,8 @@ const App = () => {
                 path="/profiles/user/:user_id"
                 component={RandomProfile}
               />
-              <Route path="/posts" component={Posts} />
+              <Route exact path="/posts" component={Posts} />
+              <Route exact path="/posts/:id" component={SinglePost} />
             </div>
           </React.Fragment>
         </Switch>
