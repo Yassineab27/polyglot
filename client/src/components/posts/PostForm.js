@@ -10,6 +10,8 @@ const PostForm = props => {
   const onSubmit = e => {
     e.preventDefault();
     if (!props.hasProfile) {
+      setTitle("");
+      setDescription("");
       return props.setAlert({
         msg: "You need to create a profile first.",
         type: "danger"

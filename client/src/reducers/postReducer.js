@@ -5,6 +5,10 @@ const initialState = {
 
 const postReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "REMOVE_COMMENT":
+      return { ...state, currentPost: action.payload };
+    case "ADD_COMMENT":
+      return { ...state, currentPost: action.payload };
     case "SET_CURRENT_POST":
       return {
         ...state,

@@ -274,6 +274,44 @@ export const dislikePost = postId => {
   };
 };
 
+export const addComment = (postId, comment) => {
+  return async dispatch => {
+    try {
+      const response = await axios.patch(`/posts/comment/${postId}`, comment);
+      dispatch({ type: "ADD_COMMENT", payload: response.data });
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: "Comment Added.", type: "success" }
+      });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.err, type: "danger" }
+      });
+    }
+  };
+};
+
+export const removeComment = (postId, commentId) => {
+  return async dispatch => {
+    try {
+      const response = await axios.delete(
+        `/posts/comment/${postId}/${commentId}`
+      );
+      dispatch({ type: "REMOVE_COMMENT", payload: response.data });
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: "Comment Deleted.", type: "success" }
+      });
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.err, type: "danger" }
+      });
+    }
+  };
+};
+
 export const setCurrentPost = postId => {
   return { type: "SET_CURRENT_POST", payload: postId };
 };

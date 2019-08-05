@@ -436,6 +436,35 @@ img {
   width: 170px;
 }
 
+.post-comment {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+  align-items: center;
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.post-comment form button {
+  width: 25%;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.post-comment-display {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  align-items: center;
+  border: none;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.205);
+}
+
+.post-comment-display img {
+  width: 50px;
+}
+
 .post {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -448,14 +477,6 @@ img {
 .post img {
   width: 100px;
 }
-
-/* .community-image {
-  background: linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.432)),
-    url("./images/com-image.jpg") no-repeat center center/cover;
-  height: 80vh;
-  border-radius: 15px;
-  margin-bottom: 5rem;
-} */
 
 .post .comment-count {
   background: var(--color-danger);
