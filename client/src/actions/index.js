@@ -184,7 +184,7 @@ const resetState = () => {
 export const getPosts = () => {
   return async dispatch => {
     try {
-      dispatch(resetPostState());
+      // dispatch(resetPostState());
       const response = await axios.get("/posts");
       dispatch({ type: "GET_POSTS", payload: response.data });
     } catch (err) {
