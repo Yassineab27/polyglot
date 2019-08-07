@@ -10,6 +10,9 @@ const postSchema = new Schema(
       required: true,
       maxlength: 100
     },
+    picture: {
+      type: String
+    },
     description: {
       type: String,
       required: true,

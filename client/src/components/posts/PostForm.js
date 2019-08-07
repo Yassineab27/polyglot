@@ -6,6 +6,7 @@ import { addPost, setAlert } from "../../actions";
 const PostForm = props => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [picture, setPicture] = useState("");
 
   const onSubmit = e => {
     e.preventDefault();
@@ -18,15 +19,20 @@ const PostForm = props => {
       });
     }
 
+    const fd = new FormData();
+    fd.append("picture", picture, picture.name);
+
     const post = {
       title,
-      description
+      description,
+      picture: fd
     };
     console.log(post);
     props.addPost(post);
 
     setTitle("");
     setDescription("");
+    setPicture("");
   };
 
   const { user } = props;
@@ -45,6 +51,13 @@ const PostForm = props => {
           placeholder="Title"
           required
           autoComplete="off"
+        />
+        {/* <label htmlFor="picture">Avatar </label> */}
+        <input
+          id="picture"
+          type="file"
+          name="picture"
+          onChange={e => setPicture(e.target.files[0])}
         />
         <textarea
           name="description"
