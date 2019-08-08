@@ -19,20 +19,16 @@ const PostForm = props => {
       });
     }
 
-    const fd = new FormData();
-    fd.append("picture", picture, picture.name);
-
     const post = {
       title,
       description,
-      picture: fd
+      picture
     };
     console.log(post);
-    props.addPost(post);
+    // props.addPost(post);
 
     setTitle("");
     setDescription("");
-    setPicture("");
   };
 
   const { user } = props;
@@ -52,11 +48,14 @@ const PostForm = props => {
           required
           autoComplete="off"
         />
-        {/* <label htmlFor="picture">Avatar </label> */}
+        <label htmlFor="picture">
+          Add an Image <span style={{ fontStyle: "italic" }}>(optional)</span>
+        </label>
         <input
           id="picture"
           type="file"
           name="picture"
+          accept="image/*"
           onChange={e => setPicture(e.target.files[0])}
         />
         <textarea

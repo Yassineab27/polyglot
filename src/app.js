@@ -7,6 +7,7 @@ const postRouter = require("./routes/posts");
 const userRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
+const uploads = require("./routes/uploads");
 
 const app = express();
 
@@ -24,5 +25,6 @@ app.use("/posts", postRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/profiles", profileRouter);
+app.use("/uploads", uploads);
 
 module.exports = app;

@@ -4,26 +4,27 @@ const Profile = require("../models/profile");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 
-const upload = require("../uploads/upload");
-const cloudinary = require("../uploads/cloudinary");
+// const upload = require("../uploads/upload");
+// const cloudinary = require("../uploads/cloudinary");
 
 const router = express.Router();
 
+// upload.single("picture")
+
 // CREATE POST
-router.post("/", auth, upload.single("picture"), async (req, res) => {
-  console.log(req.body.picture);
+router.post("/", auth, async (req, res) => {
   const profile = await Profile.findOne({ owner: req.user._id });
   if (!profile) {
     return res
       .status(400)
       .send({ error: "You need to create a profile first." });
   }
-  const result = await cloudinary.v2.uploader.upload(req.file.path);
+  // const result = await cloudinary.v2.uploader.upload(req.file.path);
   try {
     const newPost = new Post({
       ...req.body,
-      owner: req.user._id,
-      image: result.secure_url
+      owner: req.user._id
+      // image: result.secure_url
     });
     await newPost.save();
     res.status(201).send(newPost);
