@@ -21,11 +21,10 @@ const PostForm = props => {
 
     const post = {
       title,
-      description,
-      picture
+      description
     };
-    console.log(post);
-    // props.addPost(post);
+    console.log(post, picture);
+    props.addPost(post, picture);
 
     setTitle("");
     setDescription("");

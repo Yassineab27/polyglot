@@ -193,8 +193,19 @@ export const getPosts = () => {
   };
 };
 
-export const addPost = post => {
+export const addPost = (post, picture) => {
   return async dispatch => {
+    if (picture) {
+      const uploadConfig = await axios.get("/uploads");
+      delete axios.defaults.headers.common["Authorization"];
+      await axios.put(uploadConfig.data.url, picture, {
+        headers: {
+          "Content-Type": picture.type
+        }
+      });
+      setAuthorizationToken(localStorage.getItem("token"));
+    }
+
     try {
       await axios.post("/posts", post);
       dispatch(getPosts());
