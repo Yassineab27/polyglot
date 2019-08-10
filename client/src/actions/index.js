@@ -196,29 +196,44 @@ export const getPosts = () => {
 export const addPost = (post, picture) => {
   return async dispatch => {
     if (picture) {
-      const uploadConfig = await axios.get("/uploads");
-      delete axios.defaults.headers.common["Authorization"];
-      await axios.put(uploadConfig.data.url, picture, {
-        headers: {
-          "Content-Type": picture.type
-        }
-      });
-      setAuthorizationToken(localStorage.getItem("token"));
-    }
+      try {
+        const uploadConfig = await axios.get("/uploads");
+        delete axios.defaults.headers.common["Authorization"];
+        await axios.put(uploadConfig.data.url, picture, {
+          headers: {
+            "Content-Type": picture.type
+          }
+        });
+        setAuthorizationToken(localStorage.getItem("token"));
 
-    try {
-      await axios.post("/posts", post);
-      dispatch(getPosts());
-      dispatch({
-        type: "SET_ALERT",
-        payload: { msg: "Post created successfully.", type: "success" }
-      });
-      // dispatch({ type: "CREATE_POST", payload: response.data });
-    } catch (err) {
-      dispatch({
-        type: "SET_ALERT",
-        payload: { msg: err.response.data.error, type: "danger" }
-      });
+        await axios.post("/posts", { ...post, picture: uploadConfig.data.key });
+        dispatch(getPosts());
+        dispatch({
+          type: "SET_ALERT",
+          payload: { msg: "Post created successfully.", type: "success" }
+        });
+        // dispatch({ type: "CREATE_POST", payload: response.data });
+      } catch (err) {
+        dispatch({
+          type: "SET_ALERT",
+          payload: { msg: err.response.data.error, type: "danger" }
+        });
+      }
+    } else {
+      try {
+        await axios.post("/posts", post);
+        dispatch(getPosts());
+        dispatch({
+          type: "SET_ALERT",
+          payload: { msg: "Post created successfully.", type: "success" }
+        });
+        // dispatch({ type: "CREATE_POST", payload: response.data });
+      } catch (err) {
+        dispatch({
+          type: "SET_ALERT",
+          payload: { msg: err.response.data.error, type: "danger" }
+        });
+      }
     }
   };
 };

@@ -27,6 +27,16 @@ const SinglePost = props => {
     return <Loader />;
   }
 
+  const displayPicture = currentPost.picture ? (
+    <img
+      style={{ width: "500px" }}
+      src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+        currentPost.picture
+      }`}
+      alt={currentPost.title}
+    />
+  ) : null;
+
   return (
     <div className="posts">
       <Link to="/posts" className="btn btn-grey my-1">
@@ -47,6 +57,7 @@ const SinglePost = props => {
         </div>
         <div>
           <p className="text my-1">{currentPost.title}</p>
+          {displayPicture}
           <p className="my-1">{currentPost.description}</p>
           <p className="post-date">
             Posted on{" "}

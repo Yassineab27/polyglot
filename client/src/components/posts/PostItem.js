@@ -47,6 +47,16 @@ const Post = props => {
     }
   };
 
+  const displayPicture = post.picture ? (
+    <img
+      style={{ width: "500px" }}
+      src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+        post.picture
+      }`}
+      alt={post.title}
+    />
+  ) : null;
+
   return (
     <div className="posts">
       <div className="post bg-white p-1 my-1">
@@ -64,6 +74,7 @@ const Post = props => {
         </div>
         <div>
           <p className="text my-1">{post.title}</p>
+          {displayPicture}
           <p className="my-1">{post.description}</p>
           <p className="post-date">
             Posted on{" "}

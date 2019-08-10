@@ -35,6 +35,15 @@ class RandomProfile extends Component {
             </div>
             <div>
               <p className="text my-1">{post.title}</p>
+              {post.picture ? (
+                <img
+                  style={{ width: "500px" }}
+                  src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                    post.picture
+                  }`}
+                  alt={post.title}
+                />
+              ) : null}
               <p className="my-1">{post.description}</p>
               <p className="post-date">
                 Posted on{" "}
