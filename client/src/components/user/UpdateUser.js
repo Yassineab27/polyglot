@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { setAlert } from "../../actions";
+import { setAlert, updateUser } from "../../actions";
 
 import "../../index.css";
 
@@ -27,15 +27,13 @@ const User = props => {
         type: "danger"
       });
     }
-    const newUser = {
-      avatar,
+    const user = {
       firstName,
       lastName,
       email,
       password
     };
-    console.log(avatar);
-    console.log(newUser);
+    props.updateUser(user, avatar);
   };
 
   return (
@@ -45,13 +43,20 @@ const User = props => {
       <form onSubmit={onSubmit} className="form">
         <div className="form-group text-center">
           <img
-            src={user.avatar}
+            src={
+              user.avatar
+                ? `https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                    user.avatar
+                  }`
+                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            }
             alt={user.firstName}
             className="image-round"
             style={{ height: "150px", width: "150px" }}
           />
           <label htmlFor="avatar">Avatar </label>
           <input
+            accept="image/*"
             type="file"
             name="avatar"
             onChange={e => setAvatar(e.target.files[0])}
@@ -132,5 +137,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setAlert }
+  { setAlert, updateUser }
 )(User);

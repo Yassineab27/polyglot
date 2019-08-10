@@ -26,7 +26,10 @@ class Profile extends Component {
               <Link to={`/profiles/user/${post.owner._id}`}>
                 <img
                   className="image-round"
-                  src={post.owner.avatar}
+                  style={{ height: "100px", width: "100px" }}
+                  src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                    post.owner.avatar
+                  }`}
                   alt={post.owner.firstName}
                 />
                 <h4>
@@ -71,7 +74,14 @@ class Profile extends Component {
           <div className="profile-top bg-main p-2">
             <img
               className="image-round my-1"
-              src={info.profile.owner.avatar}
+              style={{ height: "200px", width: "200px" }}
+              src={
+                info.profile.owner.avatar
+                  ? `https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                      info.profile.owner.avatar
+                    }`
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              }
               alt={info.profile.owner.firstName}
             />
             <h2 className="large grey-text">
@@ -109,13 +119,17 @@ class Profile extends Component {
             </div>
           </div>
         </div>
-        <h2
-          className="large main-text text-center"
-          style={{ marginTop: "2rem" }}
-        >
-          Posts
-        </h2>
-        <div className="underline" />
+        {info.posts.length ? (
+          <React.Fragment>
+            <h2
+              className="large main-text text-center"
+              style={{ marginTop: "2rem" }}
+            >
+              Posts
+            </h2>
+            <div className="underline" />
+          </React.Fragment>
+        ) : null}
         {displayPosts}
       </div>
     );

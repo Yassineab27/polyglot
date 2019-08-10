@@ -15,7 +15,18 @@ const ProfileItem = props => {
   return (
     <div className="profile">
       <Link to={`/profiles/user/${owner._id}`}>
-        <img src={owner.avatar} alt={owner.firstName} className="image-round" />
+        <img
+          src={
+            owner.avatar
+              ? `https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                  owner.avatar
+                }`
+              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+          }
+          alt={owner.firstName}
+          className="image-round"
+          style={{ height: "150px", width: "150px" }}
+        />
       </Link>
       <div>
         <Link to={`/profiles/user/${owner._id}`}>

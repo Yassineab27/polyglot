@@ -25,7 +25,10 @@ class RandomProfile extends Component {
               <Link to={`/profiles/user/${post.owner._id}`}>
                 <img
                   className="image-round"
-                  src={post.owner.avatar}
+                  style={{ height: "100px", width: "100px" }}
+                  src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                    post.owner.avatar
+                  }`}
                   alt={post.owner.firstName}
                 />
                 <h4>
@@ -68,7 +71,10 @@ class RandomProfile extends Component {
           <div className="profile-top bg-main p-2">
             <img
               className="image-round my-1"
-              src={info.profile.owner.avatar}
+              style={{ height: "200px", width: "200px" }}
+              src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                info.profile.owner.avatar
+              }`}
               alt={info.profile.owner.firstName}
             />
             <h2 className="large grey-text">

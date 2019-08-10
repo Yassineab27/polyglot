@@ -34,7 +34,10 @@ const CommentItem = props => {
         <Link to={`/profiles/user/${comment.owner}`}>
           <img
             className="image-round"
-            src={comment.avatar}
+            style={{ height: "50px", width: "50px" }}
+            src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+              comment.avatar
+            }`}
             alt={comment.firstName}
           />
         </Link>

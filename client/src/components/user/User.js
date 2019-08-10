@@ -15,7 +15,13 @@ const User = props => {
       <div className="form">
         <div className="form-group text-center">
           <img
-            src={user.avatar}
+            src={
+              user.avatar
+                ? `https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                    user.avatar
+                  }`
+                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            }
             alt={user.firstName}
             className="image-round"
             style={{ height: "150px", width: "150px" }}

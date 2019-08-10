@@ -64,6 +64,59 @@ export const authLogin = user => {
   };
 };
 
+export const updateUser = (user, avatar) => {
+  return async dispatch => {
+    try {
+      if (!avatar) {
+        const response = await axios.patch("/users/me", user);
+        // const newUser = {
+        //   ...JSON.parse(localStorage.getItem("user")),
+        //   ...response.data
+        // };
+        localStorage.setItem("user", JSON.stringify(response.data));
+        dispatch(setUser(response.data));
+        history.push("/users/me");
+      } else {
+        // if avatar is true
+        const uploadConfig = await axios.get("/uploads");
+        delete axios.defaults.headers.common["Authorization"];
+        await axios.put(uploadConfig.data.url, avatar, {
+          headers: {
+            "Content-Type": avatar.type
+          }
+        });
+        setAuthorizationToken(localStorage.getItem("token"));
+
+        // Adding avatar to the user
+        const response = await axios.patch("/users/me", {
+          ...user,
+          avatar: uploadConfig.data.key
+        });
+        // const newUser = {
+        //   ...JSON.parse(localStorage.getItem("user")),
+        //   ...response.data
+        // };
+        localStorage.setItem("user", JSON.stringify(response.data));
+        dispatch(setUser(response.data));
+        history.push("/users/me");
+      }
+    } catch (err) {
+      if (err.response.status === 401) {
+        dispatch({
+          type: "SET_ALERT",
+          payload: { msg: err.response.data.error, type: "danger" }
+        });
+        history.push("/auth/login");
+      } else {
+        dispatch({
+          type: "SET_ALERT",
+          payload: { msg: err.response.data.error, type: "danger" }
+        });
+      }
+    }
+  };
+};
+
 export const setUser = user => {
   return { type: "SET_USER", payload: user };
 };
@@ -195,8 +248,8 @@ export const getPosts = () => {
 
 export const addPost = (post, picture) => {
   return async dispatch => {
-    if (picture) {
-      try {
+    try {
+      if (picture) {
         const uploadConfig = await axios.get("/uploads");
         delete axios.defaults.headers.common["Authorization"];
         await axios.put(uploadConfig.data.url, picture, {
@@ -212,15 +265,7 @@ export const addPost = (post, picture) => {
           type: "SET_ALERT",
           payload: { msg: "Post created successfully.", type: "success" }
         });
-        // dispatch({ type: "CREATE_POST", payload: response.data });
-      } catch (err) {
-        dispatch({
-          type: "SET_ALERT",
-          payload: { msg: err.response.data.error, type: "danger" }
-        });
-      }
-    } else {
-      try {
+      } else {
         await axios.post("/posts", post);
         dispatch(getPosts());
         dispatch({
@@ -228,12 +273,12 @@ export const addPost = (post, picture) => {
           payload: { msg: "Post created successfully.", type: "success" }
         });
         // dispatch({ type: "CREATE_POST", payload: response.data });
-      } catch (err) {
-        dispatch({
-          type: "SET_ALERT",
-          payload: { msg: err.response.data.error, type: "danger" }
-        });
       }
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
     }
   };
 };

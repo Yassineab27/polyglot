@@ -13,14 +13,22 @@ const SinglePost = props => {
     props.getPost(props.match.params.id);
   }, []);
 
-  const { currentPost, user } = props;
+  const { currentPost, auth } = props;
 
-  if (!user.hasProfile) {
+  if (!auth.hasProfile) {
     props.setAlert({
       msg: "You need to create a profile first.",
       type: "danger"
     });
     return <Redirect to="/profiles/new" />;
+  }
+
+  if (!auth.user.avatar) {
+    props.setAlert({
+      msg: "Please upload your profile picture",
+      type: "danger"
+    });
+    return <Redirect to="/users/me" />;
   }
 
   if (!currentPost) {
@@ -47,7 +55,10 @@ const SinglePost = props => {
           <Link to={`/profiles/user/${currentPost.owner._id}`}>
             <img
               className="image-round"
-              src={currentPost.owner.avatar}
+              style={{ height: "100px", width: "100px" }}
+              src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                currentPost.owner.avatar
+              }`}
               alt={currentPost.owner.firstName}
             />
             <h4>
@@ -84,7 +95,7 @@ const SinglePost = props => {
 const mapStateToProps = state => {
   return {
     currentPost: state.post.currentPost,
-    user: state.auth
+    auth: state.auth
   };
 };
 

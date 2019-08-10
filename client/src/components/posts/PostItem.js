@@ -64,7 +64,10 @@ const Post = props => {
           <Link to={`/profiles/user/${post.owner._id}`}>
             <img
               className="image-round"
-              src={post.owner.avatar}
+              style={{ height: "100px", width: "100px" }}
+              src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                post.owner.avatar
+              }`}
               alt={post.owner.firstName}
             />
             <h4>
