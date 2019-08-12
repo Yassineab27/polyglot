@@ -6,7 +6,7 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOG_OUT":
+    case "RESET_USER_STATE":
       return { user: null, profile: null, isAuthenticated: false };
     case "SET_PROFILE":
       return { ...state, hasProfile: true };

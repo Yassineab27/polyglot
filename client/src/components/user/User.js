@@ -2,12 +2,24 @@ import React from "react";
 import { Redirect, Link } from "react-router-dom";
 
 import { connect } from "react-redux";
+import { deleteUser } from "../../actions";
 
 const User = props => {
   const { user } = props;
   if (!user) {
     return <Redirect to="/auth/login" />;
   }
+
+  const handleDelete = () => {
+    const confirm = window.confirm(
+      "if you delete your account you are gonna lose all your posts. Are you sure ?"
+    );
+
+    if (confirm) {
+      return props.deleteUser();
+    }
+  };
+
   return (
     <div>
       <h2 className="large text-center">User Settings</h2>
@@ -49,7 +61,7 @@ const User = props => {
             <i className="far fa-edit" /> Edit User
           </button>
         </Link>
-        <button className="btn btn-block btn-danger">
+        <button onClick={handleDelete} className="btn btn-block btn-danger">
           <i className="far fa-trash-alt" /> Delete Account
         </button>
       </div>
@@ -61,4 +73,7 @@ const mapStateToProps = state => {
   return { user: state.auth.user };
 };
 
-export default connect(mapStateToProps)(User);
+export default connect(
+  mapStateToProps,
+  { deleteUser }
+)(User);

@@ -125,15 +125,6 @@ img {
   outline: none;
 }
 
-.badge {
-  font-size: 0.8rem;
-  padding: 0.1rem;
-  text-align: center;
-  margin: 0.3rem;
-  background: var(--color-light);
-  color: #333;
-}
-
 .alert {
   padding: 0.8rem;
   margin: 1rem 0;

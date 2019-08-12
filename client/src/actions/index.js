@@ -44,7 +44,7 @@ export const authLogin = user => {
       payload: {
         msg: `Hello, ${response.data.user.firstName} ${
           response.data.user.lastName
-        }, you were logged in successfully!`,
+        }, Please create your profile!`,
         type: "success"
       }
     });
@@ -66,49 +66,64 @@ export const authLogin = user => {
 
 export const updateUser = (user, avatar) => {
   return async dispatch => {
-    try {
-      if (!avatar) {
-        const response = await axios.patch("/users/me", user);
+    if (!avatar) {
+      const response = await axios.patch("/users/me", user);
 
-        localStorage.setItem("user", JSON.stringify(response.data));
-        dispatch(setUser(response.data));
-        history.push("/users/me");
-      } else {
-        // if avatar is true
-        const uploadConfig = await axios.get("/uploads");
-        delete axios.defaults.headers.common["Authorization"];
-        await axios.put(uploadConfig.data.url, avatar, {
-          headers: {
-            "Content-Type": avatar.type
-          }
-        });
-        setAuthorizationToken(localStorage.getItem("token"));
+      localStorage.setItem("user", JSON.stringify(response.data));
+      dispatch(setUser(response.data));
+      history.push("/users/me");
+    } else {
+      // if avatar is true
+      dispatch(
+        setAlert({
+          msg: "Your profile picture is being updated. Please wait...",
+          type: "success"
+        })
+      );
+      const uploadConfig = await axios.get("/uploads");
+      delete axios.defaults.headers.common["Authorization"];
+      await axios.put(uploadConfig.data.url, avatar, {
+        headers: {
+          "Content-Type": avatar.type
+        }
+      });
+      setAuthorizationToken(localStorage.getItem("token"));
 
-        // Adding avatar to the user
-        const response = await axios.patch("/users/me", {
-          ...user,
-          avatar: uploadConfig.data.key
-        });
+      // Adding avatar to the user
+      const response = await axios.patch("/users/me", {
+        ...user,
+        avatar: uploadConfig.data.key
+      });
 
-        localStorage.setItem("user", JSON.stringify(response.data));
-        dispatch(setUser(response.data));
-        history.push("/users/me");
-      }
-    } catch (err) {
-      if (err.response.status === 401) {
-        dispatch({
-          type: "SET_ALERT",
-          payload: { msg: err.response.data.error, type: "danger" }
-        });
-        history.push("/auth/login");
-      } else {
-        dispatch({
-          type: "SET_ALERT",
-          payload: { msg: err.response.data.error, type: "danger" }
-        });
-      }
+      localStorage.setItem("user", JSON.stringify(response.data));
+
+      dispatch(setUser(response.data));
+      history.push("/users/me");
     }
   };
+};
+
+export const deleteUser = () => {
+  return async dispatch => {
+    try {
+      await axios.delete("/users/me");
+      localStorage.clear();
+      dispatch(setAlert({ msg: "User deleted Successfuly.", type: "success" }));
+      dispatch(resetUserState());
+      history.push("/auth/register");
+    } catch (err) {
+      dispatch({
+        type: "SET_ALERT",
+        payload: { msg: err.response.data.error, type: "danger" }
+      });
+    }
+  };
+};
+
+export const logOut = () => {
+  localStorage.clear();
+  history.push("/auth/login");
+  return { type: "RESET_USER_STATE" };
 };
 
 export const setUser = user => {
@@ -119,10 +134,8 @@ export const setProfile = () => {
   return { type: "SET_PROFILE" };
 };
 
-export const logOut = () => {
-  localStorage.clear();
-  history.push("/auth/login");
-  return { type: "LOG_OUT" };
+export const resetUserState = () => {
+  return { type: "RESET_USER_STATE" };
 };
 
 // PROFILE
