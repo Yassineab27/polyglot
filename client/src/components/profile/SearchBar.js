@@ -13,12 +13,15 @@ const SearchBar = props => {
     <div className="form form-group" style={{ marginBottom: "2.5rem" }}>
       <input
         type="text"
-        placeholder="Search for Pals by Name or Native language.."
+        placeholder="Search for Pals.."
         name="search"
         value={search}
         onChange={e => setSearch(e.target.value)}
         autoComplete="off"
       />
+      <small style={{ color: "grey" }}>
+        *Search by Name or Native Language
+      </small>
     </div>
   );
 };

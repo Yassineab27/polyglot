@@ -69,10 +69,7 @@ export const updateUser = (user, avatar) => {
     try {
       if (!avatar) {
         const response = await axios.patch("/users/me", user);
-        // const newUser = {
-        //   ...JSON.parse(localStorage.getItem("user")),
-        //   ...response.data
-        // };
+
         localStorage.setItem("user", JSON.stringify(response.data));
         dispatch(setUser(response.data));
         history.push("/users/me");
@@ -92,10 +89,7 @@ export const updateUser = (user, avatar) => {
           ...user,
           avatar: uploadConfig.data.key
         });
-        // const newUser = {
-        //   ...JSON.parse(localStorage.getItem("user")),
-        //   ...response.data
-        // };
+
         localStorage.setItem("user", JSON.stringify(response.data));
         dispatch(setUser(response.data));
         history.push("/users/me");

@@ -37,10 +37,10 @@ class RandomProfile extends Component {
               </Link>
             </div>
             <div>
-              <p className="text my-1">{post.title}</p>
+              <h2 className="text my-1">{post.title}</h2>
               {post.picture ? (
                 <img
-                  style={{ width: "500px" }}
+                  className="post-picture"
                   src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
                     post.picture
                   }`}
@@ -72,9 +72,13 @@ class RandomProfile extends Component {
             <img
               className="image-round my-1"
               style={{ height: "200px", width: "200px" }}
-              src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+              src={
                 info.profile.owner.avatar
-              }`}
+                  ? `https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                      info.profile.owner.avatar
+                    }`
+                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              }
               alt={info.profile.owner.firstName}
             />
             <h2 className="large grey-text">
@@ -112,13 +116,17 @@ class RandomProfile extends Component {
             </div>
           </div>
         </div>
-        <h2
-          className="large main-text text-center"
-          style={{ marginTop: "2rem" }}
-        >
-          Posts
-        </h2>
-        <div className="underline" />
+        {info.posts.length ? (
+          <React.Fragment>
+            <h2
+              className="large main-text text-center"
+              style={{ marginTop: "2rem" }}
+            >
+              Posts
+            </h2>
+            <div className="underline" />
+          </React.Fragment>
+        ) : null}
         {displayPosts}
       </div>
     );
