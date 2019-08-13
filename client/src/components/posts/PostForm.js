@@ -80,6 +80,9 @@ const PostForm = props => {
           accept="image/*"
           onChange={e => setPicture(e.target.files[0])}
         />
+        <small className="danger-text">
+          *uploading an image may take few seconds, please wait.
+        </small>
         <textarea
           name="description"
           value={description}
