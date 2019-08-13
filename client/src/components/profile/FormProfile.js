@@ -38,7 +38,6 @@ const FormProfile = props => {
         languageL,
         interests: myInterests
       };
-      console.log(profile);
       props.handleSubmit(profile);
     }
   };
