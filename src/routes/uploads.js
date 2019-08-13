@@ -9,7 +9,8 @@ const router = express.Router();
 
 const s3 = new AWS.S3({
   accessKeyId: config.get("ACCESS_KEY_ID"),
-  secretAccessKey: config.get("SECRET_ACCESS_KEY")
+  secretAccessKey: config.get("SECRET_ACCESS_KEY"),
+  region: "eu-west-3"
 });
 
 router.get("/", auth, (req, res) => {
@@ -19,7 +20,7 @@ router.get("/", auth, (req, res) => {
     "putObject",
     {
       Bucket: "social-network-polyglot",
-      ContentType: "jpeg",
+      ContentType: "image/jpeg",
       Key: key
     },
     (err, url) => res.send({ key, url })

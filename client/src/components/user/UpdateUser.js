@@ -54,13 +54,17 @@ const User = props => {
             className="image-round"
             style={{ height: "150px", width: "150px" }}
           />
-          <label htmlFor="avatar">Avatar </label>
+
           <input
             accept="image/*"
             type="file"
             name="avatar"
             onChange={e => setAvatar(e.target.files[0])}
           />
+          <br />
+          <small className="danger-text">
+            *updating your picture may take few seconds, please wait.
+          </small>
         </div>
         <div className="form-group">
           <label htmlFor="firstName">First Name: </label>

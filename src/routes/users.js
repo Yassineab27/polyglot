@@ -23,7 +23,13 @@ router.delete("/me", auth, async (req, res) => {
 });
 
 router.patch("/me", auth, async (req, res) => {
-  const allowedUpdates = ["firstName", "lastName", "email", "password"];
+  const allowedUpdates = [
+    "firstName",
+    "lastName",
+    "email",
+    "password",
+    "avatar"
+  ];
   const updates = Object.keys(req.body);
   const isMatch = updates.every(update => allowedUpdates.includes(update));
   if (!isMatch) {

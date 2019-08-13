@@ -9,12 +9,15 @@ const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
 const uploads = require("./routes/uploads");
 
+const history = require("connect-history-api-fallback");
+
 const app = express();
 
 // connect to MongoDB
 connectDB();
 
 app.use(cors());
+app.use(history());
 
 // Parse incoming data
 app.use(express.json());
@@ -26,5 +29,14 @@ app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/profiles", profileRouter);
 app.use("/uploads", uploads);
+
+// Serve Statics in prod
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(__dirname, "../client/build/index.html"))
+  );
+}
 
 module.exports = app;

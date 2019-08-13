@@ -38,28 +38,32 @@ export const setAlert = alert => {
 
 export const authLogin = user => {
   return async dispatch => {
-    const response = await axios.post("/auth/login", user);
-    dispatch({
-      type: "SET_ALERT",
-      payload: {
-        msg: `Hello, ${response.data.user.firstName} ${
-          response.data.user.lastName
-        }, Please create your profile!`,
-        type: "success"
-      }
-    });
-    dispatch({ type: "AUTH_LOGIN", payload: response.data });
-    //   LOCAL STORAGE SAVE
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", JSON.stringify(response.data.user));
-    //   SET TOKEN IN THE HEADER
-    setAuthorizationToken(response.data.token);
+    try {
+      const response = await axios.post("/auth/login", user);
+      dispatch({
+        type: "SET_ALERT",
+        payload: {
+          msg: `Hello, ${response.data.user.firstName} ${
+            response.data.user.lastName
+          }, You were logged in successfully!`,
+          type: "success"
+        }
+      });
+      dispatch({ type: "AUTH_LOGIN", payload: response.data });
+      //   LOCAL STORAGE SAVE
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      //   SET TOKEN IN THE HEADER
+      setAuthorizationToken(response.data.token);
 
-    if (!response.data.profile) {
-      history.push("/profiles/new");
-    } else {
-      localStorage.setItem("hasProfile", JSON.stringify(true));
-      history.push("/posts");
+      if (!response.data.profile) {
+        history.push("/profiles/new");
+      } else {
+        localStorage.setItem("hasProfile", JSON.stringify(true));
+        history.push("/posts");
+      }
+    } catch (err) {
+      dispatch(setAlert({ msg: err.response.data.error, type: "danger" }));
     }
   };
 };
