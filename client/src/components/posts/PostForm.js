@@ -21,15 +21,6 @@ const PostForm = props => {
         type: "danger"
       });
     }
-    if (!props.user.avatar) {
-      setTitle("");
-      setDescription("");
-      history.push("/users/me");
-      return props.setAlert({
-        msg: "Please upload your profile picture.",
-        type: "danger"
-      });
-    }
 
     const post = {
       title,

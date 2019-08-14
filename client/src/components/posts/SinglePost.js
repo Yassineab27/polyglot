@@ -23,14 +23,6 @@ const SinglePost = props => {
     return <Redirect to="/profiles/new" />;
   }
 
-  if (!auth.user.avatar) {
-    props.setAlert({
-      msg: "Please upload your profile picture",
-      type: "danger"
-    });
-    return <Redirect to="/users/me" />;
-  }
-
   if (!currentPost) {
     return <Loader />;
   }
