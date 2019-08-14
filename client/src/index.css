@@ -583,3 +583,9 @@ img {
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .profiles {
+    grid-template-columns: 1fr;
+  }
+}
