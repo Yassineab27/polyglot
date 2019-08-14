@@ -27,9 +27,13 @@ class Profile extends Component {
                 <img
                   className="image-round"
                   style={{ height: "100px", width: "100px" }}
-                  src={`https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                  src={
                     post.owner.avatar
-                  }`}
+                      ? `https://social-network-polyglot.s3.eu-west-3.amazonaws.com/${
+                          post.owner.avatar
+                        }`
+                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                  }
                   alt={post.owner.firstName}
                 />
                 <h4>
