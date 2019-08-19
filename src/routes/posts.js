@@ -4,12 +4,7 @@ const Profile = require("../models/profile");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
 
-// const upload = require("../uploads/upload");
-// const cloudinary = require("../uploads/cloudinary");
-
 const router = express.Router();
-
-// upload.single("picture")
 
 // CREATE POST
 router.post("/", auth, async (req, res) => {
@@ -19,12 +14,11 @@ router.post("/", auth, async (req, res) => {
       .status(400)
       .send({ error: "You need to create a profile first." });
   }
-  // const result = await cloudinary.v2.uploader.upload(req.file.path);
+
   try {
     const newPost = new Post({
       ...req.body,
       owner: req.user._id
-      // image: result.secure_url
     });
     await newPost.save();
     res.status(201).send(newPost);
@@ -166,7 +160,7 @@ router.patch("/comment/:id", auth, async (req, res) => {
       owner: req.user._id
     };
 
-    post.comments.unshift(comment);
+    post.comments.push(comment);
     await post.save();
     res.status(201).send(post);
   } catch (err) {

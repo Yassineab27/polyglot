@@ -1,6 +1,6 @@
 {
   "mongoURI": "mongodb+srv://abouka3:yasmine2006@cluster0-l1hcf.mongodb.net/Polyglot?retryWrites=true&w=majority",
   "jwtSecret": "THIS_IS_MY_SECRET_2019",
-  "ACCESS_KEY_ID": "AKIA4LTSXT3T32ZLIFHG",
-  "SECRET_ACCESS_KEY": "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"
+  "ACCESS_KEY_ID": "AKIA4LTSXT3TR75EAENM",
+  "SECRET_ACCESS_KEY": "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"
 }
