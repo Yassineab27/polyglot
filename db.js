@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const config = require("config");
+
 require("dotenv").config();
 
 const connectDB = async () => {
@@ -16,5 +16,3 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
-
-// config.get("mongoURI")

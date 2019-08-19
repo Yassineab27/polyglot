@@ -1,7 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const config = require("config");
 const User = require("../models/user");
 const Profile = require("../models/profile");
 require("dotenv").config();
@@ -44,4 +43,3 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
-// config.get("jwtSecret")
