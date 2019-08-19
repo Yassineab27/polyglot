@@ -1,10 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
-
+// const config = require("config");
 const User = require("../models/user");
 const Profile = require("../models/profile");
+require("dotenv").config();
 
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
     return res.status(400).send({ error: "Email or Password Incorrect." });
   }
   try {
-    const token = jwt.sign({ _id: user._id }, config.get("jwtSecret"), {
+    const token = jwt.sign({ _id: user._id }, process.env.jwtSecret, {
       expiresIn: "7 days"
     });
     const profile = await Profile.findOne({ owner: user._id });
@@ -44,3 +44,4 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+// config.get("jwtSecret")

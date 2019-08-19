@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const config = require("config");
+// const config = require("config");
+require("dotenv").config();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(config.get("mongoURI"), {
+    await mongoose.connect(process.env.mongoURI, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false
@@ -15,3 +16,5 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+
+// config.get("mongoURI")

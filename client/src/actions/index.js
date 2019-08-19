@@ -69,8 +69,9 @@ export const authLogin = user => {
 };
 
 export const updateUser = (user, avatar) => {
-  return async dispatch => {
-    if (!avatar) {
+  return async (dispatch, getState) => {
+    const state = getState();
+    if (!avatar || avatar === state.auth.user.avatar) {
       const response = await axios.patch("/users/me", user);
 
       localStorage.setItem("user", JSON.stringify(response.data));

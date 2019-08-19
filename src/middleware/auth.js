@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
+// const config = require("config");
 const User = require("../models/user");
+require("dotenv").config();
 
 const auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
-    const verfiedToken = jwt.verify(token, config.get("jwtSecret"));
+    const verfiedToken = jwt.verify(token, process.env.jwtSecret);
     const user = await User.findById(verfiedToken._id);
     if (!user) {
       throw new Error();
@@ -21,3 +22,4 @@ const auth = async (req, res, next) => {
 };
 
 module.exports = auth;
+// config.get("jwtSecret"))

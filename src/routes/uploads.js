@@ -1,15 +1,16 @@
 const express = require("express");
 const AWS = require("aws-sdk");
-const config = require("config");
+// const config = require("config");
 const uuid = require("uuid/v1");
+require("dotenv").config();
 
 const auth = require("../middleware/auth");
 
 const router = express.Router();
 
 const s3 = new AWS.S3({
-  accessKeyId: config.get("ACCESS_KEY_ID"),
-  secretAccessKey: config.get("SECRET_ACCESS_KEY"),
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
   region: "eu-west-3"
 });
 
